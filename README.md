@@ -2,7 +2,7 @@
 <html>
 <body>
 
-<h1>Drone Game</h1>
+<h1>Drone and Airplanes</h1>
 <p>Sidescroller game where the user move the
 drone to evade incoming airplanes.</p>
 
