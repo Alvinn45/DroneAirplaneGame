@@ -16,5 +16,34 @@ public interface FlyingObject {
 	/**
 	 * Draws the flying object.
 	 */
-	public void drawIcon(Graphics2D g2);
+	public void drawFlyingObject(Graphics2D g2);
+
+	/**
+	 * Get x position.
+	 * @return x
+	 */
+	public int getX();
+	
+	/**
+	 * Return y position.
+	 * @return y
+	 */
+	public int getY();
+
+	/**
+	 * Return width of drone.
+	 * @return width
+	 */
+	public int getWidth() {
+		return width;
+	}
+
+	/**
+	 * Return height of drone.
+	 * @return height
+	 */
+	public int getHeight() {
+		return height;
+	}
+	
 }
