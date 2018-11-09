@@ -13,24 +13,30 @@ drone to evade incoming airplanes.</p>
 <p>Spencer Enriquez</p>
 <br>
 
-<h2>File Creation</h2>
-<h3>Alvin:</h3>
-<p>FlyingObject.java
-Aircraft.java
-Drone.java
-Plane.java
-Hitbox.java</p>
+<h2>File Creation List</h2>
+<p>Alvin:</p>
+<ul>
+   <li>FlyingObject.java</li>
+   <li>Aircraft.java</li>
+   <li>Drone.java</li>
+   <li>Plane.java</li>
+   <li>Hitbox.java</li>
+</ul>
 <br>
 
-<h3>Darren:</h3>
-<p>Frame.java
-Tester.java
-drone.png
-airplane.png</p>
+<p>Darren:</p>
+<ul>
+   <li>Frame.java</li>
+   <li>Tester.java</li>
+   <li>drone.png</li>
+   <li>airplane.png</li>
+</ul>
 <br>
 
-<h3>Spencer:</h3>
-<p>TimeClock.java</p>
+<p>Spencer:</p>
+<ul>
+   <li>TimeClock.java</li>
+</ul>
 <br>
 
 </body>
