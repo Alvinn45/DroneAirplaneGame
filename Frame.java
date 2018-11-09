@@ -4,11 +4,7 @@ import javax.swing.*;
 
 public class Frame extends JFrame{
 	
-	public Frame(){
-		
-	}
-	
-	public void create(){
+	public void create() {
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel(new BorderLayout());
 		JPanel bottom = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -31,6 +27,4 @@ public class Frame extends JFrame{
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-	
-	
 }
