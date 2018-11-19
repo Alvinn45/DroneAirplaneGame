@@ -1,29 +1,77 @@
-import java.awt.*;
-import java.time.*;
-import javax.swing.*;
+import java.util.*;
 
 public class TimeClock{
-	private ZonedDateTime start;
+	
+	private Timer clock;
+	private int secondsCounter = 0;
+	private TimerTask task;
+	private String timerFormat;
 	
 	public TimeClock() {
-		Instant now = Instant.now();
-		start = now.atZone(ZoneId.of("America/Los_Angeles"));
+		clock = new Timer();
+		timerFormat = "0:00";
+		task = new TimerTask() {
+			public void run() {
+			secondsCounter++;
+			}
+		};
+	}
+	
+	/*
+	 * Starts TimeClock object with a 1 second delay for run method
+	 */
+	public void start() {
+		clock.schedule(task, 1000, 1000);
 	}
 	
 	
 	/*
-	 * Get offset of time from start for game to check for winner
-	 * Uses getTotalSeconds from superclass and redraws label.
+	 * Sets timerFormat to the current time in the "0:00" format
+	 * Uses secondsCounter to find values
 	 */
-	public String getTime() {
-		return Integer.toString(start.getOffset().getTotalSeconds());					// find how to get time elapsed
+	public String changeTime() {
+		String seconds = "" + secondsCounter % 60;
+		if (seconds.length() < 2) 
+			seconds = "0" + seconds;
+		timerFormat = secondsCounter / 60 + ":" + seconds;
+		return timerFormat;
 	}
 	
+	public String getTime() {
+		return timerFormat;
+	}
 	
 	/*
 	 * Reset timer by instantiating new ZonedDateTime and repainting.
 	 */
 	public void reset() {
-		start = Instant.now().atZone(ZoneId.of("America/Los_Angeles"));
+		secondsCounter = 0;
+		clock = new Timer();
 	}
+	
+	
+	/* Tester Frame:
+	 * 
+	 * JFrame frame = new JFrame();
+	      TimeClock time = new TimeClock();
+	      time.start();      
+	      
+	      String text = time.getTime();
+	      JLabel label= new JLabel(text);
+	      Timer update = new Timer(1000, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				label.setText(time.changeTime());
+				label.repaint();
+			}
+	      });
+	      update.start();
+
+	      frame.setLayout(new FlowLayout());
+	      frame.add(label);
+
+	      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	      frame.pack();
+	      frame.setVisible(true);
+	 */
 }
