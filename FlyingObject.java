@@ -12,18 +12,18 @@ public interface FlyingObject {
 	 * Moves the flying object by x and y units.
 	 */
 	public void move(int x, int y);
-	
-	/**
-	 * Draws the flying object.
-	 */
-	public void drawFlyingObject(Graphics2D g2);
 
 	/**
 	 * Get x position.
 	 * @return x
 	 */
 	public int getX();
-	
+
+	/**
+	 * Set new x position.
+	 */
+	public void setX(int x);
+
 	/**
 	 * Return y position.
 	 * @return y
@@ -31,19 +31,19 @@ public interface FlyingObject {
 	public int getY();
 
 	/**
-	 * Return width of drone.
-	 * @return width
+	 * Set new y position.
 	 */
-	public int getWidth() {
-		return width;
-	}
+	public void setY(int y);
 
 	/**
-	 * Return height of drone.
+	 * Return width of flying object.
+	 * @return width
+	 */
+	public int getWidth(); 
+
+	/**
+	 * Return height of flying object.
 	 * @return height
 	 */
-	public int getHeight() {
-		return height;
-	}
-	
+	public int getHeight();
 }

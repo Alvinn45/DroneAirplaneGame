@@ -3,19 +3,23 @@
  * @author Alvin Nguyen
  */
 import java.awt.*;
+import java.io.*;
 import java.util.*;
+import javax.imageio.*;
 import javax.swing.*;
 
-public abstract class Aircraft implements FlyingObject {
+public abstract class Aircraft extends JComponent implements FlyingObject {
 
 	private int x;
 	private int y;
-	private File image;
+	private int w;
+	private int h;
+	private String imgFile = "";
 	
-	public Aircraft(int x, int y, File image) {
+	public Aircraft(int x, int y, String imgFile) {
 		this.x = x;
 		this.y = y;
-		this.image = image;
+		this.imgFile = imgFile;
 	}
 	
 	public void move(int x, int y) {
@@ -26,36 +30,31 @@ public abstract class Aircraft implements FlyingObject {
 	public int getX() {
 		return x;
 	}
-	
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
 	public int getY() {
 		return y;
 	}
 
+	public void setY(int y) {
+		this.y = y;
+	}
+
 	public int getWidth() {
-		return width;
+		return w;
 	}
 
 	public int getHeight() {
-		return height;
+		return h;
 	}
 
-	public void drawFlyingObject(Graphics2D g2) {
-		// Import image.
-		BufferedImage img = null;
-		try {
-			img = ImageIO.read(image);
-		} catch (IOException e) {
-			System.out.println(e);
-		}
-
-		// Create filter for image.
-		width = img.getWidth(null);
-		height = img.getHeight(null);
-		BufferedImage bi = new
-			BufferedImage(weight, height,
-				BufferedImage.TYPE_INT_RGB);
-		
-		// Draw image as icon.
-		g2.drawImage(img, bi, this.x, this.y);
+	public void paint(Graphics g) {
+		Graphics2D g2 = (Graphics2D) g;
+		Image img = Toolkit.getDefaultToolkit().getImage(imgFile);
+		g2.drawImage(img, x, y, this);
+		g2.finalize();
 	}
 }
