@@ -1,5 +1,9 @@
 import java.util.*;
 
+/*
+ * TimeClock is responsible for keeping the time of the current game
+ * @author Spencer Enriquez
+ */
 public class TimeClock{
 	
 	private Timer clock;
@@ -7,6 +11,9 @@ public class TimeClock{
 	private TimerTask task;
 	private String timerFormat;
 	
+	/*
+	 * Create TimeClock object starting at String of '0:00'
+	 */
 	public TimeClock() {
 		clock = new Timer();
 		timerFormat = "0:00";
