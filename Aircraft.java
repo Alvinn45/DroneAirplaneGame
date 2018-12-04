@@ -9,20 +9,18 @@ import java.util.*;
 import javax.imageio.*;
 import javax.swing.*;
 
-public abstract class Aircraft implements FlyingObject {
+public abstract class Aircraft extends JComponent implements Icon {
 
 	private int x;
 	private int y;
 	private int w;
 	private int h;
-	private String imgFile;
+	private int angle;
 	private BufferedImage img;
 	
 	public Aircraft(int x, int y, String imgFile) {
 		this.x = x;
 		this.y = y;
-		this.imgFile = imgFile;
-		img = null;
 		try {
 			img = ImageIO.read(new File(imgFile));
 			w = img.getWidth();
@@ -30,9 +28,15 @@ public abstract class Aircraft implements FlyingObject {
 		} catch (IOException io) {
 			System.out.println(io);
 		}
+
+		if (w == h) {
+			angle = 270;
+		} else {
+			angle = 90;
+		}
 	}
 	
-	public void move(int x, int y) {
+	public void setLocation(int x, int y) {
 		this.x += x;
 		this.y += y;
 	}
@@ -53,15 +57,17 @@ public abstract class Aircraft implements FlyingObject {
 		this.y = y;
 	}
 
-	public int getWidth() {
+	public int getIconWidth() {  
 		return w;
-	}
+	}  
 
-	public int getHeight() {
+	public int getIconHeight() {  
 		return h;
-	}
+	}  
 
-	public void paint(Graphics g2) {
+	public void paintIcon(Component c, Graphics g, int x, int y) {
+		Graphics2D g2 = (Graphics2D) g;
+		g2.rotate(Math.toRadians(angle), w / 2, h / 2);
 		g2.drawImage(img, x, y, null);
 	}
 }

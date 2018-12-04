@@ -5,41 +5,45 @@ import javax.swing.*;
 public class Frame extends JFrame {
 
 	private final int FRAME_SIZE = 1000;
+	private final Color lightblue = new Color(51,204,255);
 
 	public Frame() {
-		JFrame frame = new JFrame();
-		JPanel panel = new JPanel(new BorderLayout());
-		JPanel bottom = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		JPanel top = new JPanel();
-		JPanel environment = new JPanel(new FlowLayout());
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
 		// Add title.
+		JPanel top = new JPanel();
 		JLabel label = new JLabel("Start");
 		top.add(label);
 
 		// Add drone.
-		final Drone drn = new Drone(FRAME_SIZE / 2, FRAME_SIZE / 2,
+		JPanel environment = new JPanel();
+		final Aircraft drn = new Drone(FRAME_SIZE / 2, FRAME_SIZE / 2,
 			"drone.png");
+		JLabel dLabel = new JLabel(drn);
+		environment.add(dLabel);
 
-		JLabel drnIcon = new JLabel(new FlyingIcon(drn));
-		environment.add(drnIcon);
-
+		// Add buttons.
+		JPanel bottom = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JButton up = new JButton("Up");
 		JButton down = new JButton("Down");
+		JButton shoot = new JButton("Shoot/space");
 
 		bottom.add(up);
 		bottom.add(down);
+		bottom.add(shoot);
 
-		// Add action listeners to UP and DOWN.
+		// Add action listeners to buttons.
 
-		//panel.add(top, BorderLayout.NORTH);
-		//panel.add(bottom, BorderLayout.SOUTH);
-		panel.add(environment, BorderLayout.CENTER);
+		// Combine all panels into single panel.
+		panel.setBackground(lightblue);
+		panel.add(top);
+		panel.add(environment);
+		panel.add(bottom);
 
-		//frame.setSize(FRAME_SIZE, FRAME_SIZE);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.add(panel);
-		frame.pack();
-		frame.setVisible(true);
+		this.setSize(FRAME_SIZE, FRAME_SIZE);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.getContentPane().add(panel);
+		this.setVisible(true);
 	}
 }
