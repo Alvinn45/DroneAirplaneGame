@@ -29,23 +29,26 @@ public class Scoreboard {
 	/*
 	 * Sets score to current score format
 	 */
-	public void setScore() {
+	public String setScore() {
 		scoreFormat = "Score: " + this.getWins() + " out of " + games.size();
+		return scoreFormat;
 	}
 	
 	
+	
 	/*
-	 * Checks for win conditions or time and lives left
+	 * Checks for win conditions or time and lives left every second
 	 * Meant to be checked every second or every time drone is hit
+	 * Assumed that Drone starts with positive amount of lives
 	 */
-	public boolean addScore(TimeClock time, Drone drone) {
-		if (time.getSeconds() == WIN_TIME || drone.getLives() > WIN_LIVES_LEFT) {
+	public void checkScore(TimeClock time, Drone drone) {
+		if (time.getSeconds() < WIN_TIME && drone.getLives() > WIN_LIVES_LEFT)
+			return;
+		else if (time.getSeconds() == WIN_TIME || drone.getLives() > WIN_LIVES_LEFT) {
 			games.add(true);
-			return true;
 		}
 		else if (time.getSeconds() < WIN_TIME && drone.getLives() <= WIN_LIVES_LEFT) {
 			games.add(false);
 		}
-		return false;
 	}
 }
