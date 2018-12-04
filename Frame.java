@@ -24,8 +24,9 @@ public class Frame extends JFrame{
 		
 		frame.setSize(700, 700);
 		frame.add(panel);
-		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		panel.setBackground(lightblue);
+		frame.setVisible(true);
 	}
 	
 	public void keys(KeyEvent e){
