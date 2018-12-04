@@ -59,26 +59,40 @@ public class TimeClock{
 	
 	/* Tester Frame:
 	 * 
-	 * JFrame frame = new JFrame();
-	      TimeClock time = new TimeClock();
-	      time.start();      
-	      
-	      String text = time.getTime();
-	      JLabel label= new JLabel(text);
-	      Timer update = new Timer(1000, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				label.setText(time.changeTime());
-				label.repaint();
-			}
-	      });
-	      update.start();
-
-	      frame.setLayout(new FlowLayout());
-	      frame.add(label);
-
-	      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	      frame.pack();
-	      frame.setVisible(true);
+	 * public static void main(String[] args)
+   {
+      JFrame frame = new JFrame();
+      TimeClock time = new TimeClock();
+      time.start();      
+      
+      Drone drone = new Drone(100,100, "drone.png");
+      
+      Scoreboard scores = new Scoreboard();
+      JLabel scoreLabel = new JLabel(scores.setScore());
+      
+      String text = time.getTimeFormat();
+      JLabel label= new JLabel(text);
+      Timer update = new Timer(1000, new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			scores.checkScore(time, drone);
+			scoreLabel.setText(scores.setScore());
+			scoreLabel.repaint();
+			if (time.getSeconds() >= 90)
+				time.reset();
+			label.setText(time.changeTime());
+			label.repaint();
+		}
+      });
+      update.start();
+      
+      frame.setLayout(new FlowLayout());
+      frame.add(scoreLabel);
+      frame.add(label);
+      
+      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      frame.pack();
+      frame.setVisible(true);
+   }
 	 */
 }
