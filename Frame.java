@@ -4,6 +4,8 @@ import javax.swing.*;
 
 public class Frame extends JFrame{
 	
+	public static final Color lightblue = new Color(51,204,255);
+	
 	public void create() {
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel(new BorderLayout());
