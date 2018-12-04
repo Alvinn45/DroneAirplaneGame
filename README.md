@@ -36,6 +36,8 @@ drone to evade incoming airplanes.</p>
 <p>Spencer:</p>
 <ul>
    <li>TimeClock.java</li>
+   <li>Scoreboard.java</li>
+   <li>Drone Freeze implementation</li>
 </ul>
 <br>
 
