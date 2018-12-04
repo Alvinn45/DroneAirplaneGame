@@ -23,4 +23,18 @@
 	public void setY(int y) {
 		this.y = y;
 	}
+	 
+	 //Arrow keys action to move the drone
+	 public void keys(KeyEvent e){
+		int key = e.getKeyCode();
+		if(key == KeyEvent.VK_UP){
+			y++;
+		} else if(key == KeyEvent.VK_DOWN){
+			y--;
+		}else if(key == KeyEvent.VK_RIGHT){
+			x++;
+		}else if(key == KeyEvent.VK_LEFT){
+			x--;
+		}
+	}
  }
