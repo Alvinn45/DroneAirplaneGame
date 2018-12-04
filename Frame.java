@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class Frame extends JFrame {
 
-	private final int FRAME_SIZE = 1400;
+	private final int FRAME_SIZE = 1000;
 
 	public Frame() {
 		JFrame frame = new JFrame();
@@ -18,10 +18,11 @@ public class Frame extends JFrame {
 		top.add(label);
 
 		// Add drone.
-		Drone drn = new Drone(FRAME_SIZE / 2, FRAME_SIZE / 2,
-			"/drone.png");
+		final Drone drn = new Drone(FRAME_SIZE / 2, FRAME_SIZE / 2,
+			"drone.png");
 
-		environment.add(drn, BorderLayout.CENTER);
+		JLabel drnIcon = new JLabel(new FlyingIcon(drn));
+		environment.add(drnIcon);
 
 		JButton up = new JButton("Up");
 		JButton down = new JButton("Down");
@@ -31,13 +32,14 @@ public class Frame extends JFrame {
 
 		// Add action listeners to UP and DOWN.
 
-		panel.add(top, BorderLayout.NORTH);
-		panel.add(bottom, BorderLayout.SOUTH);
+		//panel.add(top, BorderLayout.NORTH);
+		//panel.add(bottom, BorderLayout.SOUTH);
 		panel.add(environment, BorderLayout.CENTER);
 
-		frame.setSize(FRAME_SIZE, FRAME_SIZE);
-		frame.add(panel);
-		frame.setVisible(true);
+		//frame.setSize(FRAME_SIZE, FRAME_SIZE);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.add(panel);
+		frame.pack();
+		frame.setVisible(true);
 	}
 }

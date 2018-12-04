@@ -46,4 +46,9 @@ public interface FlyingObject {
 	 * @return height
 	 */
 	public int getHeight();
+
+	/**
+	 * Paint the image.
+	 */
+	public void paint(Graphics g2);
 }

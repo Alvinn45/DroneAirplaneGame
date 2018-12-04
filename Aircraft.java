@@ -3,23 +3,33 @@
  * @author Alvin Nguyen
  */
 import java.awt.*;
+import java.awt.image.*;
 import java.io.*;
 import java.util.*;
 import javax.imageio.*;
 import javax.swing.*;
 
-public abstract class Aircraft extends JComponent implements FlyingObject {
+public abstract class Aircraft implements FlyingObject {
 
 	private int x;
 	private int y;
 	private int w;
 	private int h;
-	private String imgFile = "";
+	private String imgFile;
+	private BufferedImage img;
 	
 	public Aircraft(int x, int y, String imgFile) {
 		this.x = x;
 		this.y = y;
 		this.imgFile = imgFile;
+		img = null;
+		try {
+			img = ImageIO.read(new File(imgFile));
+			w = img.getWidth();
+			h = img.getHeight();
+		} catch (IOException io) {
+			System.out.println(io);
+		}
 	}
 	
 	public void move(int x, int y) {
@@ -51,10 +61,7 @@ public abstract class Aircraft extends JComponent implements FlyingObject {
 		return h;
 	}
 
-	public void paint(Graphics g) {
-		Graphics2D g2 = (Graphics2D) g;
-		Image img = Toolkit.getDefaultToolkit().getImage(imgFile);
-		g2.drawImage(img, x, y, this);
-		g2.finalize();
+	public void paint(Graphics g2) {
+		g2.drawImage(img, x, y, null);
 	}
 }
