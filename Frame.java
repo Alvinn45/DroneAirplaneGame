@@ -14,9 +14,11 @@ public class Frame extends JFrame{
 		
 		JButton up = new JButton("Up");
 		JButton down = new JButton("Down");
+		JButton shoot = new JButton("Shoot/space");
 		
 		bottom.add(up);
 		bottom.add(down);
+		bottom.add(shoot);
 		
 		panel.add(top, BorderLayout.NORTH);
 		panel.add(bottom, BorderLayout.SOUTH);
