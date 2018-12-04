@@ -27,4 +27,14 @@ public class Frame extends JFrame{
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
+	
+	public void keys(KeyEvent e){
+		int key = e.getKeyCode();
+		if(key == KeyEvent.VK_UP){
+			drone.y++;
+		} else if(key == KeyEvent.VK_DOWN){
+			drone.y--;
+		}
+		drone.repaint();
+	}
 }
