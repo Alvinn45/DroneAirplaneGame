@@ -18,26 +18,33 @@ public class Frame extends JFrame {
 
 		// Add drone.
 		JPanel environment = new JPanel();
+		environment.setPreferredSize(new Dimension(FRAME_SIZE, FRAME_SIZE));
 		final Aircraft drn = new Drone(FRAME_SIZE / 2, FRAME_SIZE / 2,
 			"drone.png");
 		JLabel dLabel = new JLabel(drn);
 		environment.add(dLabel);
 
+		// Add plane.
+		final Aircraft pln = new Plane(FRAME_SIZE / 2 + FRAME_SIZE / 4,
+				FRAME_SIZE / 2, "airplane.png");
+		JLabel pLabel = new JLabel(pln);
+		environment.add(pLabel);
+
 		// Add buttons.
 		JPanel bottom = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JButton up = new JButton("Up");
 		JButton down = new JButton("Down");
-		JButton shoot = new JButton("Shoot/space");
+		//JButton shoot = new JButton("Shoot/space");
 
 		bottom.add(up);
 		bottom.add(down);
-		bottom.add(shoot);
+		//bottom.add(shoot);
 
 		// Add action listeners to buttons.
 
 		// Combine all panels into single panel.
 		panel.setBackground(lightblue);
-		panel.add(top);
+		//panel.add(top);
 		panel.add(environment);
 		panel.add(bottom);
 

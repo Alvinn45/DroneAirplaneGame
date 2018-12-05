@@ -7,9 +7,9 @@ import java.io.*;
 import java.util.*;
 import javax.swing.*;
  
-public class Airplane extends Aircraft {
+public class Plane extends Aircraft {
 	
-	public Airplane(int x, int y, String imgFile) {
+	public Plane(int x, int y, String imgFile) {
 		super(x, y, imgFile);
 	}
 }	

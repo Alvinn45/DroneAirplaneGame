@@ -30,9 +30,13 @@ public abstract class Aircraft extends JComponent implements Icon {
 		}
 
 		if (w == h) {
-			angle = 270;
-		} else {
 			angle = 90;
+		} else {
+			// Switch w and h for non-square images.
+			int temp = w;
+			w = h;
+			h = temp;
+			angle = 270;
 		}
 	}
 	
