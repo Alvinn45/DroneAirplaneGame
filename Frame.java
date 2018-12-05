@@ -12,17 +12,6 @@ public class Frame extends JFrame{
 		JPanel bottom = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JPanel top = new JPanel();
 		
-		JButton up = new JButton("Up");
-		JButton down = new JButton("Down");
-		JButton shoot = new JButton("Shoot/space");
-		
-		bottom.add(up);
-		bottom.add(down);
-		bottom.add(shoot);
-		
-		panel.add(top, BorderLayout.NORTH);
-		panel.add(bottom, BorderLayout.SOUTH);
-		
 		JLabel label = new JLabel("Start");
 		top.add(label);
 		
@@ -30,6 +19,8 @@ public class Frame extends JFrame{
 		frame.add(panel);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel.setBackground(lightblue);
+		top.setBackground(lightblue);
+		panel.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
 		frame.setVisible(true);
 	}
 	
