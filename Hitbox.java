@@ -167,9 +167,10 @@ public class Hitbox {
 	 */
 	private void planeHitbox(Graphics2D g2) {
 		Rectangle.Double wing =
-			//new Rectangle.Double(xMin, yMin, xMax / 2, yMax);
+			new Rectangle.Double(xMin, yMin, xMax / 2, yMax);
 		Rectangle.Double tail =
-			//new Rectangle.Double(xMin,
-		droneHitbox();
+			new Rectangle.Double(xMin, yMin, xMax, yMax / 2);
+		g2.draw(wing);
+		g2.draw(tail);
 	}
 }
