@@ -45,4 +45,32 @@ public class Drone extends Aircraft {
 	public void subtractLife() {
 		lives--;
 	}
+	
+		public void keyPressed(KeyEvent e){
+		int key = e.getKeyCode();
+		
+		if(key == KeyEvent.VK_UP){
+			setLocation(0,getY() + 5);
+		}else if(key == KeyEvent.VK_DOWN){
+			setLocation(0,getY()-5);
+		}else if(key == KeyEvent.VK_RIGHT){
+			setLocation(getX() +5,0);
+		}else if(key == KeyEvent.VK_LEFT){
+			setLocation(getX()-5,0);
+		}
+	}
+	
+	public void keyReleased(KeyEvent e){
+		int key = e.getKeyCode();
+		
+		if(key == KeyEvent.VK_UP){
+			setLocation(0,0);
+		}else if(key == KeyEvent.VK_DOWN){
+			setLocation(0,0);
+		}else if(key == KeyEvent.VK_RIGHT){
+			setLocation(0,0);
+		}else if(key == KeyEvent.VK_LEFT){
+			setLocation(0,0);
+		}
+	}
 }
