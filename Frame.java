@@ -65,13 +65,10 @@ public class Frame extends JFrame {
 
 		// Add buttons.
 		JPanel bottom = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		JButton up = new JButton("Up");
-		JButton down = new JButton("Down");
+
 		//JButton shoot = new JButton("Shoot/space");
 
 		bottom.add(timeLabel);
-		bottom.add(up);
-		bottom.add(down);
 		bottom.add(scoreLabel);
 		//bottom.add(shoot);
 
