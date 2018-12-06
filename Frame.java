@@ -2,13 +2,15 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
+import javax.swing.Timer;
+
 
 public class Frame extends JFrame {
 
 	private final int FRAME_SIZE = 1000;
 	private final Color lightblue = new Color(51,204,255);
 
-	public Frame() {
+	public void create() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
@@ -21,7 +23,7 @@ public class Frame extends JFrame {
 		JPanel skyfield = new JPanel();
 		skyfield.setPreferredSize(new Dimension(FRAME_SIZE, FRAME_SIZE));
 		skyfield.setBackground(lightblue);
-		Aircraft drn = new Drone(FRAME_SIZE / 4, FRAME_SIZE / 2,
+		Drone drn = new Drone(FRAME_SIZE / 4, FRAME_SIZE / 2,
 			"drone.png");
 		JLabel dLabel = new JLabel(drn);
 		skyfield.add(dLabel);
@@ -38,6 +40,28 @@ public class Frame extends JFrame {
 		skyfield.add(pLabel_1);
 		skyfield.add(pLabel_2);
 		skyfield.add(pLabel_3);
+		
+		TimeClock time = new TimeClock();
+		Scoreboard scores = new Scoreboard();
+	      JLabel scoreLabel = new JLabel(scores.setScore());
+	      
+	      String text = time.getTimeFormat();
+	      JLabel timeLabel= new JLabel(text);
+	      Timer update = new Timer(1000, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				time.addSecond();
+				scores.checkScore(time, drn);
+				scoreLabel.setText(scores.setScore());
+				scoreLabel.repaint();
+				if (time.getSeconds() >= 90)
+					time.reset();
+				timeLabel.setText(time.changeTime());
+				timeLabel.repaint();
+			}
+	      });
+	      update.start();
+		
 
 		// Add buttons.
 		JPanel bottom = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -45,8 +69,10 @@ public class Frame extends JFrame {
 		JButton down = new JButton("Down");
 		//JButton shoot = new JButton("Shoot/space");
 
+		bottom.add(timeLabel);
 		bottom.add(up);
 		bottom.add(down);
+		bottom.add(scoreLabel);
 		//bottom.add(shoot);
 
 		// Add action listeners to buttons.
