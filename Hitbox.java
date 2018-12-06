@@ -42,11 +42,11 @@ public class Hitbox {
 		bounds[3] = yMax; 
 
 		// Create units.
-		xUnit = xMax / 16;
-		yUnit = yMax / 16;
+		// xUnit = xMax / 16;
+		// yUnit = yMax / 16;
 
 		// Use measurements to create hitbox.
-		drawHitbox();
+		// drawHitbox();
 	}
 	
 	/**

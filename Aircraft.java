@@ -25,18 +25,9 @@ public abstract class Aircraft extends JComponent implements Icon {
 			img = ImageIO.read(new File(imgFile));
 			w = img.getWidth();
 			h = img.getHeight();
+			angle = (w == h) ? 90 : 0;
 		} catch (IOException io) {
 			System.out.println(io);
-		}
-
-		if (w == h) {
-			angle = 90;
-		} else {
-			// Switch w and h for non-square images.
-			int temp = w;
-			w = h;
-			h = temp;
-			angle = 270;
 		}
 	}
 	
@@ -71,7 +62,7 @@ public abstract class Aircraft extends JComponent implements Icon {
 
 	public void paintIcon(Component c, Graphics g, int x, int y) {
 		Graphics2D g2 = (Graphics2D) g;
-		g2.rotate(Math.toRadians(angle), w / 2, h / 2);
+		if (w == h) g2.rotate(Math.toRadians(angle), w / 2, h / 2);
 		g2.drawImage(img, x, y, null);
 	}
 }

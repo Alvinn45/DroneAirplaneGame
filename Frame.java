@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 import javax.swing.*;
 
 public class Frame extends JFrame {
@@ -17,18 +18,26 @@ public class Frame extends JFrame {
 		top.add(label);
 
 		// Add drone.
-		JPanel environment = new JPanel();
-		environment.setPreferredSize(new Dimension(FRAME_SIZE, FRAME_SIZE));
-		final Aircraft drn = new Drone(FRAME_SIZE / 2, FRAME_SIZE / 2,
+		JPanel skyfield = new JPanel();
+		skyfield.setPreferredSize(new Dimension(FRAME_SIZE, FRAME_SIZE));
+		skyfield.setBackground(lightblue);
+		Aircraft drn = new Drone(FRAME_SIZE / 4, FRAME_SIZE / 2,
 			"drone.png");
 		JLabel dLabel = new JLabel(drn);
-		environment.add(dLabel);
+		skyfield.add(dLabel);
 
-		// Add plane.
-		final Aircraft pln = new Plane(FRAME_SIZE / 2 + FRAME_SIZE / 4,
-				FRAME_SIZE / 2, "airplane.png");
-		JLabel pLabel = new JLabel(pln);
-		environment.add(pLabel);
+		// Add enemy planes.
+		ArrayList<Aircraft> planes = new ArrayList<>();
+		for (int i = 0; i < 10; i++) {
+			planes.add(new Plane(FRAME_SIZE, i * 10,
+				"airplane.png"));
+		}
+		JLabel pLabel_1 = new JLabel(planes.get(0));
+		JLabel pLabel_2 = new JLabel(planes.get(1));
+		JLabel pLabel_3 = new JLabel(planes.get(2));
+		skyfield.add(pLabel_1);
+		skyfield.add(pLabel_2);
+		skyfield.add(pLabel_3);
 
 		// Add buttons.
 		JPanel bottom = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -43,24 +52,13 @@ public class Frame extends JFrame {
 		// Add action listeners to buttons.
 
 		// Combine all panels into single panel.
-		panel.setBackground(lightblue);
-		//panel.add(top);
-		panel.add(environment);
+		panel.add(top);
+		panel.add(skyfield);
 		panel.add(bottom);
 
 		this.setSize(FRAME_SIZE, FRAME_SIZE);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().add(panel);
 		this.setVisible(true);
-		
-		panel.add(top, BorderLayout.NORTH);
-		
-		JLabel label = new JLabel("Start");
-		top.add(label);
-		
-		frame.setSize(700, 700);
-		frame.add(panel);
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }
