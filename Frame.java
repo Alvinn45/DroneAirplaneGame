@@ -35,7 +35,7 @@ public class Frame extends JFrame {
 		// Add enemy planes.
 		ArrayList<Aircraft> planes = new ArrayList<>();
 		ArrayList<JLabel>  planeLabels = new ArrayList<>();
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < 2; i++) {
 			int adjust = (int)(Math.random() * FRAME_WIDTH / 2);
 			planes.add(new Plane(FRAME_WIDTH + adjust,
 					i * 10 + adjust,
@@ -61,17 +61,15 @@ public class Frame extends JFrame {
 
 		// Add action listeners to buttons.
 		up.addActionListener(eventUp -> {
-			sop(drn.getY() + " B4");
 			drn.setLocation(0, 100);
 			dLabel.repaint();
-			sop(drn.getY() + " A5");
+			sop("x: " + drn.getX() + "; y:" + drn.getY());
 		});
 
 		down.addActionListener(eventDown -> {
-			sop(drn.getY() + " B4");
 			drn.setLocation(0, -100);
 			dLabel.repaint();
-			sop(drn.getY() + " A5");
+			sop("x: " + drn.getX() + "; y:" + drn.getY());
 		});
 
 		skyField.addKeyListener(new KeyListener() {
@@ -93,6 +91,10 @@ public class Frame extends JFrame {
 				} else if(key == KeyEvent.VK_LEFT) {
 					setLocation(-5, 0);
 				}
+
+				sop("x: " + drn.getX() + "; y:" + drn.getY());
+				dLabel.revalidate();
+				dLabel.repaint();
 			}
 
 			@Override
@@ -108,6 +110,11 @@ public class Frame extends JFrame {
 				} else if(key == KeyEvent.VK_LEFT) {
 					setLocation(0, 0);
 				}
+
+
+				sop("x: " + drn.getX() + "; y:" + drn.getY());
+				dLabel.revalidate();
+				dLabel.repaint();
 			}
 		});
 		skyField.setFocusable(true);
@@ -118,6 +125,7 @@ public class Frame extends JFrame {
 			for (Aircraft pl : planes) {
 				if (pl.getX() < 100) pl.setX(FRAME_WIDTH);
 				pl.setLocation(-5, 0);
+				sop("x: " + drn.getX() + "; y:" + drn.getY());
 			}
 			for (JLabel pl : planeLabels)
 				pl.repaint();
