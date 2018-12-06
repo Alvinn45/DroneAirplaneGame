@@ -13,6 +13,7 @@ public class Drone extends Aircraft {
 
 	public Drone(int x, int y, String imgFile) {
 		super(x, y, imgFile);
+		lives = 2;
 	}
 
 	/**
