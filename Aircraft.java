@@ -3,22 +3,44 @@
  * @author Alvin Nguyen
  */
 import java.awt.*;
+import java.awt.image.*;
+import java.io.*;
 import java.util.*;
+import javax.imageio.*;
 import javax.swing.*;
 
-public abstract class Aircraft implements FlyingObject {
+public abstract class Aircraft extends JComponent implements Icon {
 
 	private int x;
 	private int y;
-	private File image;
+	private int w;
+	private int h;
+	private int angle;
+	private BufferedImage img;
 	
-	public Aircraft(int x, int y, File image) {
+	public Aircraft(int x, int y, String imgFile) {
 		this.x = x;
 		this.y = y;
-		this.image = image;
+		try {
+			img = ImageIO.read(new File(imgFile));
+			w = img.getWidth();
+			h = img.getHeight();
+		} catch (IOException io) {
+			System.out.println(io);
+		}
+
+		if (w == h) {
+			angle = 90;
+		} else {
+			// Switch w and h for non-square images.
+			int temp = w;
+			w = h;
+			h = temp;
+			angle = 270;
+		}
 	}
 	
-	public void move(int x, int y) {
+	public void setLocation(int x, int y) {
 		this.x += x;
 		this.y += y;
 	}
@@ -26,36 +48,30 @@ public abstract class Aircraft implements FlyingObject {
 	public int getX() {
 		return x;
 	}
-	
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
 	public int getY() {
 		return y;
 	}
 
-	public int getWidth() {
-		return width;
+	public void setY(int y) {
+		this.y = y;
 	}
 
-	public int getHeight() {
-		return height;
-	}
+	public int getIconWidth() {  
+		return w;
+	}  
 
-	public void drawFlyingObject(Graphics2D g2) {
-		// Import image.
-		BufferedImage img = null;
-		try {
-			img = ImageIO.read(image);
-		} catch (IOException e) {
-			System.out.println(e);
-		}
+	public int getIconHeight() {  
+		return h;
+	}  
 
-		// Create filter for image.
-		width = img.getWidth(null);
-		height = img.getHeight(null);
-		BufferedImage bi = new
-			BufferedImage(weight, height,
-				BufferedImage.TYPE_INT_RGB);
-		
-		// Draw image as icon.
-		g2.drawImage(img, bi, this.x, this.y);
+	public void paintIcon(Component c, Graphics g, int x, int y) {
+		Graphics2D g2 = (Graphics2D) g;
+		g2.rotate(Math.toRadians(angle), w / 2, h / 2);
+		g2.drawImage(img, x, y, null);
 	}
 }

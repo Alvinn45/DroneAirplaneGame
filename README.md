@@ -2,8 +2,8 @@
 <body>
 
 <h1>Drone and Airplanes</h1>
-<img src="drone.png" alt="Drone" style="width:5%">
-<img src="airplane.png" alt="Plane" style="width:8%">
+<img src="drone.png" alt="Drone">
+<img src="airplane.png" alt="Plane">
 <p>Sidescroller game where the user move the
 drone to evade incoming airplanes.</p>
 
@@ -16,7 +16,6 @@ drone to evade incoming airplanes.</p>
 <h2>File Creation List</h2>
 <p>Alvin:</p>
 <ul>
-   <li>FlyingObject.java</li>
    <li>Aircraft.java</li>
    <li>Drone.java</li>
    <li>Plane.java</li>
