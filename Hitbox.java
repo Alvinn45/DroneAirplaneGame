@@ -32,8 +32,8 @@ public class Hitbox {
 		// Define bounds of hitbox.
 		xMin = ac.getX();
 		yMin = ac.getY();
-		xMax = ac.getWidth() + xMin;
-		yMax = ac.getHeight() + yMin;
+		xMax = ac.getIconWidth();
+		yMax = ac.getIconHeight();
 
 		// Store bounds into an array.
 		bounds[0] = xMin;
@@ -127,9 +127,9 @@ public class Hitbox {
 	 */
 	public void drawHitbox() {
 		if (xMax != yMax) {
-			planeHitbox();
+			//planeHitbox();
 		} else {
-			droneHitbox();
+			//droneHitbox();
 		}
 	}
 

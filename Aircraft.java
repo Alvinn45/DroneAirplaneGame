@@ -9,7 +9,7 @@ import java.util.*;
 import javax.imageio.*;
 import javax.swing.*;
 
-public abstract class Aircraft extends JComponent implements Icon {
+public abstract class Aircraft implements Icon {
 
 	private int x;
 	private int y;
@@ -30,12 +30,12 @@ public abstract class Aircraft extends JComponent implements Icon {
 			System.out.println(io);
 		}
 	}
-	
+
 	public void setLocation(int x, int y) {
 		this.x += x;
 		this.y += y;
-	}
-	
+	}	
+
 	public int getX() {
 		return x;
 	}
@@ -65,4 +65,5 @@ public abstract class Aircraft extends JComponent implements Icon {
 		if (w == h) g2.rotate(Math.toRadians(angle), w / 2, h / 2);
 		g2.drawImage(img, x, y, null);
 	}
+
 }

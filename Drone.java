@@ -2,11 +2,6 @@
  * Flying Drone.
  * @author Alvin Nguyen
  */
-import java.awt.*;
-import java.io.*;
-import java.util.*;
-import javax.swing.*;
- 
 public class Drone extends Aircraft {
 	
 	private int lives;
