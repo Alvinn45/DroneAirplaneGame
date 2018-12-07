@@ -1,0 +1,14 @@
+Frame.java:
+Added Hitboxes to every aircraft in the game.
+After each Hitbox, there are sop (System.out.println) functions to confirm hitbox moves with its assigned Aircraft.
+Similar sop functions exist for each Hitbox update by the method resetBounds().
+
+Drone.java:
+Added descriptions for KeyEvents.
+Added => import java.awt.event.KeyEvent;
+
+Hitbox.java:
+Commented out all code using Java Swing.
+Added methods to retrieve bounds, explicitly minimum of x and y.
+Moved setting bounds into a private method setBounds().
+Each time Aircraft moves, the method resetBounds() calls setBounds() to update Aircraft's collision bounds.
