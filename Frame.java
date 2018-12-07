@@ -73,6 +73,7 @@ public class Frame extends JFrame {
  
 		Timer updateMovement = new Timer(50, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/*
 				for (int i = 0; i < planeLabels.size(); i++) {
 					if (drn.getHitbox().hasCollided(planes.get(i).getHitbox())) {
 						drn.subtractLife();
@@ -84,6 +85,7 @@ public class Frame extends JFrame {
 						planes.get(i).setY(planeLabels.get(i).getY());
 					}
 				}
+				*/
 				dLabel.setLocation(drn.getX() + 1, drn.getY());
 				drn.setX(dLabel.getX());
 				drn.setY(dLabel.getY());
