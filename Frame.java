@@ -47,12 +47,13 @@ public class Frame extends JFrame {
 						planes.get(i).getIconHeight());
 		}
 		
-		//add Scoreboard and TimeClock
+		//add Scoreboard, TimeClock, and Lives Left
 		TimeClock time = new TimeClock();	      
 		Scoreboard scores = new Scoreboard();
 		JLabel scoreLabel = new JLabel(scores.setScore());
 		String text = time.getTimeFormat();
 		JLabel timeLabel= new JLabel(text);
+		JLabel livesLabel = new JLabel("Total Lives Left: " + drn.getLives() + " |");
 
 
 		Timer updateConditions = new Timer(1000, new ActionListener() {
@@ -61,15 +62,28 @@ public class Frame extends JFrame {
 				time.addSecond();
 				scores.checkScore(time, drn);
 				scoreLabel.setText(scores.setScore());
-				if (time.getSeconds() >= 90)
+				if (time.getSeconds() >= 90 || drn.getLives() <= 0)
 					time.reset();
+					drn.setLives(3);
 				timeLabel.setText(time.changeTime());
+				livesLabel.setText("Total Lives Left: " + drn.getLives() + " |");
 			}
 		});
 		updateConditions.start();
  
 		Timer updateMovement = new Timer(50, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				for (int i = 0; i < planeLabels.size(); i++) {
+					if (drn.getHitbox().hasCollided(planes.get(i).getHitbox())) {
+						drn.subtractLife();
+						dLabel.setLocation(FRAME_WIDTH / 4, FRAME_HEIGHT / 4);
+						drn.setX(dLabel.getX());
+						drn.setY(dLabel.getY());
+						planes.get(i).setLocation(FRAME_WIDTH, (int)(Math.random() * FRAME_HEIGHT));
+						planes.get(i).setX(planeLabels.get(i).getX());
+						planes.get(i).setY(planeLabels.get(i).getY());
+					}
+				}
 				dLabel.setLocation(drn.getX() + 1, drn.getY());
 				drn.setX(dLabel.getX());
 				drn.setY(dLabel.getY());
@@ -99,7 +113,7 @@ public class Frame extends JFrame {
 		for (JLabel pl : planeLabels) skyField.add(pl);
 		JPanel bottom = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
-
+		bottom.add(livesLabel);
 		bottom.add(timeLabel);
 		bottom.add(scoreLabel);
 
