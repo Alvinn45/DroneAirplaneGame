@@ -17,18 +17,22 @@ public class Hitbox {
 	// x-axis Measurements 
 	private int xMin;
 	private int xMax;
-	private double xUnit;
 
 	// y-axis Measurements
 	private int yMin;
 	private int yMax;
-	private double yUnit;
 
 	public Hitbox(Aircraft ac) {
 		// Set aircraft.
 		this.ac = ac;
 		collided = false;
-
+		setHitbox();
+	}
+	
+	/**
+	 * Set hitbox of the aircraft.
+	 */
+	private void setHitbox() {
 		// Define bounds of hitbox.
 		xMin = ac.getX();
 		yMin = ac.getY();
@@ -40,21 +44,22 @@ public class Hitbox {
 		bounds[1] = xMax; 
 		bounds[2] = yMin; 
 		bounds[3] = yMax; 
-
-		// Create units.
-		// xUnit = xMax / 16;
-		// yUnit = yMax / 16;
-
-		// Use measurements to create hitbox.
-		// drawHitbox();
 	}
-	
+
 	/**
 	 * Return array with x and y bounds.
 	 * @return bounds measurements
 	 */
 	public int[] getBounds() {
-		return bounds;
+		int[] curBounds = { bounds[0], bounds[2] };
+		return curBounds;
+	}
+
+	/**
+	 * Reset bounds of hitbox after movement.
+	 */
+	public void resetBounds() {
+		setHitbox();
 	}
 
 	/**
@@ -122,9 +127,10 @@ public class Hitbox {
 		}
 	}
 
-	/**
+	/*
 	 * Choose hitbox to draw depending on aircraft.
 	 */
+	/*
 	public void drawHitbox() {
 		if (xMax != yMax) {
 			//planeHitbox();
@@ -132,17 +138,20 @@ public class Hitbox {
 			//droneHitbox();
 		}
 	}
+	*/
 
-	/**
+	/*
 	 * Square hitbox for drone.
 	 */
+	/*
 	public void droneHitbox(Graphics2D g2) {
 		Rectangle.Double body =
 			new Rectangle.Double(xMin, yMin, xMax, yMax);
 		g2.draw(body);
 	}
+	*/
 
-	/**
+	/*
 	 * Airplane Hitbox Reference:
 	 *  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 	 * |_|_|_|_|*|*|*|*|_|_|_|_|_|_|_|_|
@@ -165,6 +174,7 @@ public class Hitbox {
 	 * Composite hitbox in 16 x 16 grid.
 	 * @param Graphics2D
 	 */
+	/*
 	private void planeHitbox(Graphics2D g2) {
 		Rectangle.Double wing =
 			new Rectangle.Double(xMin, yMin, xMax / 2, yMax);
@@ -173,4 +183,5 @@ public class Hitbox {
 		g2.draw(wing);
 		g2.draw(tail);
 	}
+	*/
 }

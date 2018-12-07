@@ -29,7 +29,7 @@ public class TimeClock{
 		String seconds = "" + secondsCounter % 60;
 		if (seconds.length() < 2) 
 			seconds = "0" + seconds;
-		timerFormat = secondsCounter / 60 + ":" + seconds;
+		timerFormat = "Game Time: " + secondsCounter / 60 + ":" + seconds + " | ";
 		return timerFormat;
 	}
 	
