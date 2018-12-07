@@ -82,7 +82,7 @@ public class Frame extends JFrame {
 		ArrayList<Aircraft> planes = new ArrayList<>();
 		ArrayList<JLabel>  planeLabels = new ArrayList<>();
 		ArrayList<Hitbox>  planeHitboxes = new ArrayList<>();
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 2; i++) {
 			int adjust = (int)(Math.random() * FRAME_WIDTH / 2);
 			planes.add(new Plane(FRAME_WIDTH + adjust,
 					i * 10 + adjust,

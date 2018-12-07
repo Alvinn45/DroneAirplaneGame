@@ -73,6 +73,14 @@ public class Hitbox {
 	}
 
 	/**
+	 * Set collided to new boolean value.
+	 * @param boolean
+	 */
+	public void setCollided(boolean b) {
+		collided = b;
+	}
+
+	/**
 	 * Return whether hitbox has collided with another aircraft.
 	 * @return boolean
 	 */
@@ -137,20 +145,26 @@ public class Hitbox {
 		 */
 		if (compBounds[0] == false && compBounds[1] == false) {
 			collided = false; // Condition 1	
+			other.setCollided(false);
 		} else if (compBounds[0] == false && compBounds[1] == true) {
 			if (compBounds[2] == true || compBounds[3] == true) {
 				collided = true; // Condition 2
+				other.setCollided(true);
 			} else {
 				collided = false; // Condition 3
+				other.setCollided(false);
 			}
 		} else if (compBounds[0] == true && compBounds[1] == true) {
 			if (compBounds[2] == true || compBounds[3] == true) {
 				collided = true; // Condition 4
+				other.setCollided(true);
 			} else {
 				collided = false; // Condition 5
+				other.setCollided(false);
 			}
 		} else {
 			collided = false; // Condition 6
+			other.setCollided(false);
 		}
 		return collided;
 	}
