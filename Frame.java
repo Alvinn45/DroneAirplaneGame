@@ -147,21 +147,24 @@ public class Frame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				boolean collided = dHitbox.getCollided();
-				time.addSecond();
-				for (Hitbox ph : planeHitboxes) {
+				boolean dead = drn.isDead();
+				if (time.getSeconds() <= scores.getWinTime()
+						&& dead == false) {
+					time.addSecond();
+					for (Hitbox ph : planeHitboxes) {
 					collided = dHitbox.hasCollided(ph);
-					sop(collided);
-					if (collided == true
-						&& drn.isDead() == false) {
+					//sop("Collided: " + collided);
+					if (collided == true) {
 						drn.subtractLife();
 						dHitbox.setCollided(false);
+						ph.setCollided(false);
 					}
-					sop(drn.getLives());
-				}
-				if (time.getSeconds() > scores.getWinTime()
-						|| drn.isDead() == true) {
-					time.reset();
+					//sop("Drone Lives: " + drn.getLives());
+					//sop("Drone died: " + drn.isDead());
+					}
+				} else {
 					drn.setLives(scores.getAvailLives());
+					time.reset();
 				}
 				scores.checkScore(time, drn);
 				//sop("WINS: " + scores.getWins());

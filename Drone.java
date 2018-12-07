@@ -51,7 +51,7 @@ public class Drone extends Aircraft {
 	 * @return false if not dead 
 	 */
 	public boolean isDead() {
-		return lives > 0; 
+		return lives < 0; 
 	}
 	
 	/**
