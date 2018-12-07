@@ -6,11 +6,10 @@ import javax.swing.Timer;
 
 public class Frame extends JFrame {
 
-	private final Dimension MAX_FRAME = new Dimension(1920, 1080);
 	private final int FRAME_WIDTH = 1000;
 	private final int FRAME_HEIGHT = 1000;
+	private final Dimension MAX_FRAME = new Dimension(FRAME_WIDTH, FRAME_HEIGHT);
 	private final Color lightblue = new Color(51,204,255);
-	//private final int FRAME_SIZE = 1000;
 	
 	public Frame() {
 		JPanel panel = new JPanel();
@@ -18,7 +17,7 @@ public class Frame extends JFrame {
 
 		// Add title.
 		JPanel top = new JPanel();
-		JLabel label = new JLabel("Start");
+		JLabel label = new JLabel("Welcome to the Drone Survival Game!");
 		top.add(label);
 
 		// Add drone.
@@ -47,25 +46,16 @@ public class Frame extends JFrame {
 						planes.get(i).getIconWidth(),
 						planes.get(i).getIconHeight());
 		}
-		Timer updateMovement = new Timer(50, new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dLabel.setLocation(drn.getX() + 1, drn.getY());
-				for (int i = 0; i < planeLabels.size(); i++) {
-					planeLabels.get(i).setLocation(planes.get(i).getX() - 1, planes.get(i).getY());
-				}
-			}
-		});
-		updateMovement.start();
-
 		
 		//add Scoreboard and TimeClock
-		 TimeClock time = new TimeClock();	      
-	      Scoreboard scores = new Scoreboard();
-	      JLabel scoreLabel = new JLabel(scores.setScore());
-	      
-	      String text = time.getTimeFormat();
-	      JLabel timeLabel= new JLabel(text);
-	      Timer updateConditions = new Timer(1000, new ActionListener() {
+		TimeClock time = new TimeClock();	      
+		Scoreboard scores = new Scoreboard();
+		JLabel scoreLabel = new JLabel(scores.setScore());
+		String text = time.getTimeFormat();
+		JLabel timeLabel= new JLabel(text);
+
+
+		Timer updateConditions = new Timer(1000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				time.addSecond();
@@ -75,8 +65,36 @@ public class Frame extends JFrame {
 					time.reset();
 				timeLabel.setText(time.changeTime());
 			}
-	      });
-	      updateConditions.start();
+		});
+		updateConditions.start();
+ 
+		Timer updateMovement = new Timer(50, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dLabel.setLocation(drn.getX() + 1, drn.getY());
+				drn.setX(dLabel.getX());
+				drn.setY(dLabel.getY());
+				for (int i = 0; i < planeLabels.size(); i++) {
+					planeLabels.get(i).setLocation(planes.get(i).getX() - (int)Math.pow(2, scores.getWins()), planes.get(i).getY());
+				}
+			}
+		});
+		updateMovement.start();
+
+		// For Airplane respawn
+		final int DELAY = 10;
+		Timer t = new Timer(DELAY, event -> {
+			for (Aircraft pl : planes) {
+				if (pl.getX() < 10) {
+					pl.setX(FRAME_WIDTH);
+					pl.setY((int)(Math.random() * FRAME_HEIGHT));
+				}
+				pl.setLocation(-5, 0);
+			}
+			for (JLabel pl : planeLabels)
+				pl.repaint();
+		});
+		t.start();
+
 
 		for (JLabel pl : planeLabels) skyField.add(pl);
 		JPanel bottom = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -85,50 +103,39 @@ public class Frame extends JFrame {
 		bottom.add(timeLabel);
 		bottom.add(scoreLabel);
 
+		
+		// Arrow Key Movement Implementation
 		skyField.addKeyListener(new KeyListener() {
 			@Override
-			public void keyTyped(KeyEvent e) {
-				
-			}
+			public void keyTyped(KeyEvent e) {}
 
 			@Override
 			public void keyPressed(KeyEvent e) {
 				int key = e.getKeyCode();
 				
 				if (key == KeyEvent.VK_UP) {
-					dLabel.setLocation(drn.getX(), drn.getY() - 10);
+					if (dLabel.getY() > 20)
+						dLabel.setLocation(drn.getX(), drn.getY() - 40);
 					
 				} else if(key == KeyEvent.VK_DOWN) {
-					dLabel.setLocation(drn.getX(), drn.getY() + 10);
+					if (dLabel.getY() < FRAME_HEIGHT)
+						dLabel.setLocation(drn.getX(), drn.getY() + 40);
+					
 				} else if(key == KeyEvent.VK_RIGHT) {
-					dLabel.setLocation(drn.getX() + 10, drn.getY());
+					if (dLabel.getX() < FRAME_WIDTH)
+						dLabel.setLocation(drn.getX() + 40, drn.getY());
 				} else if(key == KeyEvent.VK_LEFT) {
-					dLabel.setLocation(drn.getX() - 10, drn.getY());
+					if (dLabel.getX() > 20)
+						dLabel.setLocation(drn.getX() - 40, drn.getY());
 				}
 				drn.setX(dLabel.getX());
 				drn.setY(dLabel.getY());
 			}
-
 			
 			@Override
-			public void keyReleased(KeyEvent e) {
-				drn.setX(dLabel.getX());
-				drn.setY(dLabel.getY());
-			}
+			public void keyReleased(KeyEvent e) {}
 		});
 		skyField.setFocusable(true);
-
-		// Add timer movement to each enemy plane.
-		final int DELAY = 10;
-		Timer t = new Timer(DELAY, event -> {
-			for (Aircraft pl : planes) {
-				if (pl.getX() < 100) pl.setX(FRAME_WIDTH);
-				pl.setLocation(-5, 0);
-			}
-			for (JLabel pl : planeLabels)
-				pl.repaint();
-		});
-		t.start();
 
 		// Combine all panels into single panel.
 		panel.add(top);
