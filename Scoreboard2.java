@@ -51,6 +51,14 @@ public class Scoreboard2 {
 	public int getWinTime() {
 		return WIN_TIME;
 	}
+
+	/**
+	 * Return number of lives before game over.
+	 * @return WIN_LIVES_LEFT 
+	 */
+	public int getWinLivesLeft() {
+		return WIN_LIVES_LEFT;
+	}	
 	
 	/**
 	 * Sets score to current score format
@@ -71,7 +79,7 @@ public class Scoreboard2 {
 	 */
 	public void checkScore(TimeClock time, Drone drone) {
 		if (time.getSeconds() == WIN_TIME
-				|| drone.getLives() > WIN_LIVES_LEFT) {
+				&& drone.getLives() > WIN_LIVES_LEFT) {
 			totalGames++;
 			wonGames++;
 		} else if (time.getSeconds() < WIN_TIME

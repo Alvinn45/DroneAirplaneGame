@@ -60,12 +60,23 @@ public class Frame extends JFrame {
 		Timer updateConditions = new Timer(1000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				boolean collided = false;
 				time.addSecond();
-				if (time.getSeconds() >= scores.getWinTime())
+				if (time.getSeconds() > scores.getWinTime()) {
 					time.reset();
+					drn.setLives(2);
+				}
+				for (Hitbox ph : planeHitboxes) {
+					collided = dHitbox.hasCollided(ph);
+					sop(collided);
+					if (collided == true) {
+						drn.subtractLife();
+						collided = false;
+					}
+				}
 				scores.checkScore(time, drn);
-				sop("WINS: " + scores.getWins());
-				sop("TOTAL: " + scores.getTotalGames());
+				//sop("WINS: " + scores.getWins());
+				//sop("TOTAL: " + scores.getTotalGames());
 				scoreLabel.setText(scores.setScore());
 				timeLabel.setText(time.changeTime());
 			}
@@ -78,7 +89,10 @@ public class Frame extends JFrame {
 				drn.setX(dLabel.getX());
 				drn.setY(dLabel.getY());
 				for (int i = 0; i < planeLabels.size(); i++) {
-					planeLabels.get(i).setLocation(planes.get(i).getX() - (int)Math.pow(2, scores.getWins()), planes.get(i).getY());
+					planeLabels.get(i).setLocation(
+						planes.get(i).getX() - 
+						(int)Math.pow(2, scores.getWins()),
+						planes.get(i).getY());
 					planeHitboxes.get(i).resetBounds();
 					//sop(planeHitboxes.get(i).printBounds());
 				}
@@ -99,21 +113,7 @@ public class Frame extends JFrame {
 				planeHitboxes.get(i).resetBounds();
 				//sop(planeHitboxes.get(i).printBounds());
 			}
-			/*
-			for (Aircraft pl : planes) {
-				if (pl.getX() < 10) {
-					pl.setX(FRAME_WIDTH);
-					pl.setY((int)(Math.random() * FRAME_HEIGHT));
-				}
-				pl.setLocation(-5, 0);
-				pl.resetBounds();
-				for (int j : pl.getBounds())
-					sop("Next Hitbox\n" + j);
-			}
-			*/
-			for (JLabel pl : planeLabels) {
-				pl.repaint();
-			}
+			for (JLabel pl : planeLabels) pl.repaint();
 		});
 		t.start();
 
