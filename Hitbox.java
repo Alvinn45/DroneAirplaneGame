@@ -1,5 +1,5 @@
 /**
- * Create hitbox shape for aircraft.
+ * Create hitbox boundaries for aircraft.
  * @author Alvin Nguyen
  */
 import java.awt.*;
@@ -83,14 +83,14 @@ public class Hitbox {
 		/*
 		 * Compare each x and y bounds.
 		 * Collision occurs when comparisons are true.
-		 * compBounds[0] = this.xMin ≥ other.xMax;
-		 * compBounds[1] = this.xMax ≥ other.xMin;
+		 * compBounds[0] = this.xMin ≤ other.xMax;
+		 * compBounds[1] = this.xMax ≤ other.xMin;
 		 * compBounds[2] = this.yMin ≤ other.yMax;
 		 * compBounds[3] = this.yMax ≥ other.yMin;
 		 */
 		boolean[] compBounds = new boolean[4];
-		compBounds[0] = bounds[0] >= otherBounds[1];
-		compBounds[1] = bounds[1] >= otherBounds[0];
+		compBounds[0] = bounds[0] <= otherBounds[1];
+		compBounds[1] = bounds[1] <= otherBounds[0];
 		compBounds[2] = bounds[2] <= otherBounds[3];
 		compBounds[3] = bounds[3] >= otherBounds[2];
 		
@@ -100,98 +100,58 @@ public class Hitbox {
 		 * Assume h1 and h2 are moving towards each other.
 		 * Let T be the top bound, B be the bottom bound,
 		 *    L be the left bound, and R be right bound of the hitbox.
-		 * 1. If h1.L < h2.R & h1.R < h2.L,
+		 *
+		 * 1. Hitboxes passed each other.
+		 *    If h1.L > h2.R & h1.R < h2.L,
 		 *    then no collision.
-		 * 2. If h1.L < h2.R & h1.R ≥ h2.L,
+		 *
+		 * 2. Before hitboxes completely pass each other,
+		 *    top or bottom bound of each hitboxes converge.
+		 *    If h1.L < h2.R & h1.R ≥ h2.L,
 		 *    and h1.B ≤ h2.T / h1.T ≥ h2.B,
 		 *    then collision.
-		 * 3. If h1.L < h2.R & h1.R ≥ h2.L,
+		 *
+		 * 3. Before hitboxes completely pass each other,
+		 *    top or bottom bound of each hitboxes do not converge.
+		 *    If h1.L < h2.R & h1.R ≥ h2.L,
 		 *    and h1.B > h2.T / h1.T < h2.B,
 		 *    then no collision.
-		 * 4. If h1.L ≥ h2.R & h1.R ≥ h2.L,
+		 *
+		 * 4. Before hitboxes pass each other vertically,
+		 *    top or bottom bound of each hitboxes converge.
+		 *    If h1.L ≥ h2.R & h1.R ≥ h2.L,
 		 *    and h1.B ≤ h2.T / h1.T ≥ h2.B,
 		 *    then collision.
-		 * 5. If h1.L ≥ h2.R & h1.R ≥ h2.L,
+		 *
+		 * 5. Before hitboxes pass each other vertically,
+		 *    top or bottom bound of each hitboxes converge.
+		 *    If h1.L ≥ h2.R & h1.R ≥ h2.L,
 		 *    and h1.B > h2.T / h1.T < h2.B,
 		 *    then no collision.
-		 * 6. Since h1 and h2 cannot move in reverse,
-		 *    h1.L ≥ h2.R & h1.R < h2.L can never be true,
-		 *    so there is no collision for this condition.
+		 *
+		 * 6. While hitboxes has not pass each other in any direction,
+		 *    but are in front of each other, then no collision.
+		 *    If h1.L < h2.R & h1.R < h2.L,
+		 *    and h1.B > h2.T / h1.T < h2.B,
+		 *    then no collision.
 		 */
 		if (compBounds[0] == false && compBounds[1] == false) {
-			return false; // Condition 1	
+			collided = false; // Condition 1	
 		} else if (compBounds[0] == false && compBounds[1] == true) {
 			if (compBounds[2] == true || compBounds[3] == true) {
-				return true; // Condition 2
+				collided = true; // Condition 2
 			} else {
-				return false; // Condition 3
+				collided = false; // Condition 3
 			}
 		} else if (compBounds[0] == true && compBounds[1] == true) {
 			if (compBounds[2] == true || compBounds[3] == true) {
-				return true; // Condition 4
+				collided = true; // Condition 4
 			} else {
-				return false; // Condition 5
+				collided = false; // Condition 5
 			}
 		} else {
-			return false; // Condition 6
+			collided = false; // Condition 6
 		}
+		return collided;
 	}
-
-	/*
-	 * Choose hitbox to draw depending on aircraft.
-	 */
-	/*
-	public void drawHitbox() {
-		if (xMax != yMax) {
-			//planeHitbox();
-		} else {
-			//droneHitbox();
-		}
-	}
-	*/
-
-	/*
-	 * Square hitbox for drone.
-	 */
-	/*
-	public void droneHitbox(Graphics2D g2) {
-		Rectangle.Double body =
-			new Rectangle.Double(xMin, yMin, xMax, yMax);
-		g2.draw(body);
-	}
-	*/
-
-	/*
-	 * Airplane Hitbox Reference:
-	 *  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-	 * |_|_|_|_|*|*|*|*|_|_|_|_|_|_|_|_|
-	 * |_|_|_|_|*|*|*|*|_|_|_|_|_|_|_|_|
-	 * |_|_|_|_|*|*|*|*|_|_|_|_|_|_|_|_|
-	 * |_|_|_|_|*|*|*|*|_|_|_|_|_|_|_|_|
-	 * |_|_|_|_|*|*|*|*|_|_|_|_|_|_|_|_|
-	 * |_|_|_|_|*|*|*|*|_|_|_|_|_|_|_|_|
-	 * |_|_|*|*|*|*|*|*|*|*|*|*|*|*|*|*|
-	 * |_|_|*|*|*|*|*|*|*|*|*|*|*|*|*|*|
-	 * |_|_|*|*|*|*|*|*|*|*|*|*|*|*|*|*|
-	 * |_|_|*|*|*|*|*|*|*|*|*|*|*|*|*|*|
-	 * |_|_|_|_|*|*|*|*|_|_|_|_|_|_|_|_|
-	 * |_|_|_|_|*|*|*|*|_|_|_|_|_|_|_|_|
-	 * |_|_|_|_|*|*|*|*|_|_|_|_|_|_|_|_|
-	 * |_|_|_|_|*|*|*|*|_|_|_|_|_|_|_|_|
-	 * |_|_|_|_|*|*|*|*|_|_|_|_|_|_|_|_|
-	 * |_|_|_|_|*|*|*|*|_|_|_|_|_|_|_|_|
-	 *
-	 * Composite hitbox in 16 x 16 grid.
-	 * @param Graphics2D
-	 */
-	/*
-	private void planeHitbox(Graphics2D g2) {
-		Rectangle.Double wing =
-			new Rectangle.Double(xMin, yMin, xMax / 2, yMax);
-		Rectangle.Double tail =
-			new Rectangle.Double(xMin, yMin, xMax, yMax / 2);
-		g2.draw(wing);
-		g2.draw(tail);
-	}
-	*/
 }

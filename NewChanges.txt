@@ -3,9 +3,16 @@ Added Hitboxes to every aircraft in the game.
 After each Hitbox, there are sop (System.out.println) functions to confirm hitbox moves with its assigned Aircraft.
 Similar sop functions exist for each Hitbox update by the method resetBounds().
 
+Added "tags" to index the primary purpose for the written methods:
+Master - GUI
+Drone - Player controlled aircraft
+Plane - Enemy aircrafts
+Game - Game environment
+
 Drone.java:
 Added descriptions for KeyEvents.
 Added => import java.awt.event.KeyEvent;
+Drone initializes number of lives from Scoreboard2's variable for available lives.
 
 Hitbox.java:
 Commented out all code using Java Swing.
@@ -17,3 +24,4 @@ Each time Aircraft moves, the method resetBounds() calls setBounds() to update A
 Scoreboard2.java:
 Uses int to count wins, losses, and total games.
 Clarified some explanations.
+Includes final variables that set the parameters for the game (Available lives, Game timer, minimum lives for win).

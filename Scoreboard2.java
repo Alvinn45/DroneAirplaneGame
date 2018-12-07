@@ -10,7 +10,8 @@ public class Scoreboard2 {
 	private int wonGames;
 	private int totalGames;
 	private String scoreFormat;
-	public final int WIN_TIME = 5;
+	public final int AVAIL_LIVES = 3;
+	public final int WIN_TIME = 90;
 	public final int WIN_LIVES_LEFT = 0;
 
 	public Scoreboard2() {
@@ -18,7 +19,6 @@ public class Scoreboard2 {
 		totalGames = 0;
 		scoreFormat = setScore();
 	}
-	
 	
 	/**
 	 * Return number of won games.
@@ -42,6 +42,14 @@ public class Scoreboard2 {
 	 */
 	public int getLosses() {
 		return totalGames - wonGames;
+	}
+
+	/**
+	 * Return number of lives available to the player in the game.
+	 * @return AVAIL_LIVES
+	 */
+	public int getAvailLives() {
+		return AVAIL_LIVES;
 	}
 
 	/**

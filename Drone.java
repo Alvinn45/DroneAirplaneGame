@@ -6,11 +6,12 @@ import java.awt.event.KeyEvent;
 
 public class Drone extends Aircraft {
 	
+	// Initial number of lives depends on game's parameters.
 	private int lives;
 
 	public Drone(int x, int y, String imgFile) {
 		super(x, y, imgFile);
-		lives = 2;
+		lives = new Scoreboard2().getAvailLives();
 	}
 
 	/**
@@ -52,13 +53,13 @@ public class Drone extends Aircraft {
 		int key = e.getKeyCode();
 		
 		if(key == KeyEvent.VK_UP){
-			setLocation(0, 5);
+			setLocation(0, 40);
 		}else if(key == KeyEvent.VK_DOWN){
-			setLocation(0, -5);
+			setLocation(0, -40);
 		}else if(key == KeyEvent.VK_RIGHT){
-			setLocation(5,0);
+			setLocation(40, 0);
 		}else if(key == KeyEvent.VK_LEFT){
-			setLocation(-5,0);
+			setLocation(-40, 0);
 		}
 	}
 	
@@ -70,13 +71,13 @@ public class Drone extends Aircraft {
 		int key = e.getKeyCode();
 		
 		if(key == KeyEvent.VK_UP){
-			setLocation(0,0);
+			setLocation(0, 0);
 		}else if(key == KeyEvent.VK_DOWN){
-			setLocation(0,0);
+			setLocation(0, 0);
 		}else if(key == KeyEvent.VK_RIGHT){
-			setLocation(0,0);
+			setLocation(0, 0);
 		}else if(key == KeyEvent.VK_LEFT){
-			setLocation(0,0);
+			setLocation(0, 0);
 		}
 	}
 }
