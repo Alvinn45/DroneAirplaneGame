@@ -11,7 +11,7 @@ public class TimeClock{
 	 * Create TimeClock object starting at String of '0:00'
 	 */
 	public TimeClock() {
-		timerFormat = "0:00";
+		timerFormat = "Game Time: " + "0:00";
 		secondsCounter = 0;
 	}
 	

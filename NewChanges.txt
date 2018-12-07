@@ -13,3 +13,7 @@ Added methods to retrieve bounds.
 Added method to print bounds to String.
 Moved setting bounds into a private method setBounds().
 Each time Aircraft moves, the method resetBounds() calls setBounds() to update Aircraft's collision bounds.
+
+Scoreboard2.java:
+Uses int to count wins, losses, and total games.
+Clarified some explanations.

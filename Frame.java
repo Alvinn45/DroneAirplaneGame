@@ -54,32 +54,19 @@ public class Frame extends JFrame {
 		
 		// Add Scoreboard and TimeClock
 		TimeClock time = new TimeClock();	      
-		Scoreboard scores = new Scoreboard();
+		Scoreboard2 scores = new Scoreboard2();
 		JLabel scoreLabel = new JLabel(scores.setScore());
-		String text = time.getTimeFormat();
-		JLabel timeLabel= new JLabel(text);
-
+		JLabel timeLabel= new JLabel(time.getTimeFormat());
 		Timer updateConditions = new Timer(1000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				time.addSecond();
-				scores.checkScore(time, drn);
-				scoreLabel.setText(scores.setScore());
-				if (time.getSeconds() >= 90)
+				if (time.getSeconds() >= scores.getWinTime())
 					time.reset();
-				/*
-				boolean hit = false;
-				while (time.getSeconds() < 90) {
-					for (Hitbox ph : planeHitboxes)
-						hit = dHitbox.hasCollided(ph);
-					if (hit == true) {
-						sop("hit");
-						hit = false;
-					}
-				}
-				*/
-				time.reset();
-
+				scores.checkScore(time, drn);
+				sop("WINS: " + scores.getWins());
+				sop("TOTAL: " + scores.getTotalGames());
+				scoreLabel.setText(scores.setScore());
 				timeLabel.setText(time.changeTime());
 			}
 		});
