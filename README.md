@@ -38,6 +38,7 @@ drone to evade incoming airplanes.</p>
    <li>Scoreboard.java</li>
    <li>Drone and Plane Movement</li>
    <li>Arrow Key to Drone Movement Implementation</li>
+   <li>Airplane Spawn / De-spawn Frame Implementation</li>
 </ul>
 <br>
 
