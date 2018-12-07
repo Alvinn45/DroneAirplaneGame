@@ -32,13 +32,13 @@ public class Frame extends JFrame {
 		dLabel.setBounds(drn.getX(), drn.getY(),
 				drn.getIconWidth(), drn.getIconHeight());
 		Hitbox dHitbox = new Hitbox(drn);
-		//for (int i : dHitbox.getBounds()) sop("Initial Hitbox\n" + i);
+		//sop(dHitbox.printBounds());
 
 		// Add enemy planes.
 		ArrayList<Aircraft> planes = new ArrayList<>();
 		ArrayList<JLabel>  planeLabels = new ArrayList<>();
 		ArrayList<Hitbox>  planeHitboxes = new ArrayList<>();
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < 1; i++) {
 			int adjust = (int)(Math.random() * FRAME_WIDTH / 2);
 			planes.add(new Plane(FRAME_WIDTH + adjust,
 					i * 10 + adjust,
@@ -49,8 +49,7 @@ public class Frame extends JFrame {
 						planes.get(i).getIconWidth(),
 						planes.get(i).getIconHeight());
 			planeHitboxes.add(new Hitbox(planes.get(i)));
-			for (int j : planeHitboxes.get(i).getBounds())
-				sop("Initial Hitbox\n" + j);
+			//for (Hitbox ph : planeHitboxes) sop(ph.printBounds());
 		}
 		
 		// Add Scoreboard and TimeClock
@@ -68,6 +67,19 @@ public class Frame extends JFrame {
 				scoreLabel.setText(scores.setScore());
 				if (time.getSeconds() >= 90)
 					time.reset();
+				/*
+				boolean hit = false;
+				while (time.getSeconds() < 90) {
+					for (Hitbox ph : planeHitboxes)
+						hit = dHitbox.hasCollided(ph);
+					if (hit == true) {
+						sop("hit");
+						hit = false;
+					}
+				}
+				*/
+				time.reset();
+
 				timeLabel.setText(time.changeTime());
 			}
 		});
@@ -81,8 +93,7 @@ public class Frame extends JFrame {
 				for (int i = 0; i < planeLabels.size(); i++) {
 					planeLabels.get(i).setLocation(planes.get(i).getX() - (int)Math.pow(2, scores.getWins()), planes.get(i).getY());
 					planeHitboxes.get(i).resetBounds();
-					//for (int j : planeHitboxes.get(i).getBounds())
-						//sop("Next Hitbox\n" + j);
+					//sop(planeHitboxes.get(i).printBounds());
 				}
 			}
 		});
@@ -99,8 +110,7 @@ public class Frame extends JFrame {
 				}
 				planes.get(i).setLocation(-5, 0);
 				planeHitboxes.get(i).resetBounds();
-				//for (int j : planeHitboxes.get(i).getBounds())
-					//sop("Next Hitbox\n" + j);
+				//sop(planeHitboxes.get(i).printBounds());
 			}
 			/*
 			for (Aircraft pl : planes) {
@@ -153,7 +163,7 @@ public class Frame extends JFrame {
 				drn.setX(dLabel.getX());
 				drn.setY(dLabel.getY());
 				dHitbox.resetBounds();
-				//for (int i : dHitbox.getBounds()) sop("Next Hitbox\n" + i);
+				//sop(dHitbox.printBounds());
 			}
 			
 			@Override
@@ -167,7 +177,6 @@ public class Frame extends JFrame {
 		panel.add(bottom);
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//this.setSize(new Dimension(FRAME_SIZE, FRAME_SIZE));
 		this.setSize(MAX_FRAME);
 		this.getContentPane().add(panel);
 		this.setVisible(true);

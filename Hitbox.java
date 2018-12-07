@@ -47,12 +47,22 @@ public class Hitbox {
 	}
 
 	/**
+	 * Print array with x and y bounds.
+	 * @return String bounds 
+	 */
+	public String printBounds() {
+		return "xMin: " + bounds[0] + "\n"
+			+ "xMin: " + bounds[0] + "\n"
+			+ "yMax: " + bounds[2] + "\n"
+			+ "yMax: " + bounds[3];
+	}
+
+	/**
 	 * Return array with x and y bounds.
-	 * @return bounds measurements
+	 * @return bounds
 	 */
 	public int[] getBounds() {
-		int[] curBounds = { bounds[0], bounds[2] };
-		return curBounds;
+		return bounds;
 	}
 
 	/**
@@ -82,7 +92,7 @@ public class Hitbox {
 		compBounds[0] = bounds[0] >= otherBounds[1];
 		compBounds[1] = bounds[1] >= otherBounds[0];
 		compBounds[2] = bounds[2] <= otherBounds[3];
-		compBounds[3] = bounds[3] >= otherBounds[4];
+		compBounds[3] = bounds[3] >= otherBounds[2];
 		
 		/*
 		 * Collision Conditions:
