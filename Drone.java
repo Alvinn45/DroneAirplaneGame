@@ -43,6 +43,16 @@ public class Drone extends Aircraft {
 	public void subtractLife() {
 		lives--;
 	}
+
+	/**
+	 * Test if lives of drone does not decrease beyond life limit.
+	 * @param Drone
+	 * @return true if dead
+	 * @return false if not dead 
+	 */
+	public boolean isDead() {
+		return lives > 0; 
+	}
 	
 	/**
 	 * Drone moves in direction of pressed input command:

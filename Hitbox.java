@@ -71,6 +71,14 @@ public class Hitbox {
 	public void resetBounds() {
 		setHitbox();
 	}
+	
+	/**
+	 * Return collided value.
+	 * @return collided
+	 */
+	public boolean getCollided() {
+		return collided;
+	}
 
 	/**
 	 * Set collided to new boolean value.

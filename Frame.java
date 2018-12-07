@@ -146,16 +146,20 @@ public class Frame extends JFrame {
 		Timer updateConditions = new Timer(1000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				boolean collided = false;
+				boolean collided = dHitbox.getCollided();
 				time.addSecond();
 				for (Hitbox ph : planeHitboxes) {
 					collided = dHitbox.hasCollided(ph);
-					//sop(collided);
-					if (collided == true)
+					sop(collided);
+					if (collided == true
+						&& drn.isDead() == false) {
 						drn.subtractLife();
-					//sop(drn.getLives());
+						dHitbox.setCollided(false);
+					}
+					sop(drn.getLives());
 				}
-				if (time.getSeconds() > scores.getWinTime()) {
+				if (time.getSeconds() > scores.getWinTime()
+						|| drn.isDead() == true) {
 					time.reset();
 					drn.setLives(scores.getAvailLives());
 				}
