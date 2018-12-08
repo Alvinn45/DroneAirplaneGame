@@ -113,6 +113,7 @@ public class Frame extends JFrame {
 					planeHitboxes.get(i).resetBounds();
 					//sop(planeHitboxes.get(i).printBounds());
 				}
+				for (JLabel pl : planeLabels) pl.repaint();
 			}
 		});
 		updateMovement.start();

@@ -179,7 +179,7 @@ public class Hitbox {
 			+ "\nh1.xMin <= h2.xMax: " + compBounds[0]
 			+ "\nh1.xMax <= h2.xMin: " + compBounds[1]
 			+ "\nh1.yMin <= h2.yMax: " + compBounds[2]
-			+ "\nh1.yMax <= h2.yMax: " + compBounds[3]);
+			+ "\nh1.yMax >= h2.yMax: " + compBounds[3]);
 
 		return collided;
 	}
