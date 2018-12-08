@@ -45,7 +45,7 @@ public class Drone extends Aircraft {
 	}
 
 	public String toString() {
-		return "Drone at: " + this.getX() + ", " + this.getY();
+		return "Drone at:\n" + this.getHitbox().printBounds();
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class Drone extends Aircraft {
 	 * @return false if not dead 
 	 */
 	public boolean isDead() {
-		return lives < 0; 
+		return lives <= 0; 
 	}
 	
 	/**

@@ -191,6 +191,7 @@ public class Frame extends JFrame {
 						drn.getHitbox().setCollided(false);
 						pn.getHitbox().setCollided(false);
 						sop("Collision of " + drn.toString());
+						sop("with\nCollision of " + pn.toString());
 					}
 					//sop("Drone Lives: " + drn.getLives());
 					//sop("Drone died: " + drn.isDead());

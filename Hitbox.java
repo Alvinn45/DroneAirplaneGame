@@ -36,8 +36,8 @@ public class Hitbox {
 		// Define bounds of hitbox.
 		xMin = ac.getX();
 		yMin = ac.getY();
-		xMax = ac.getIconWidth();
-		yMax = ac.getIconHeight();
+		xMax = xMin + ac.getIconWidth();
+		yMax = yMin + ac.getIconHeight();
 
 		// Store bounds into an array.
 		bounds[0] = xMin;
@@ -53,7 +53,7 @@ public class Hitbox {
 	public String printBounds() {
 		return "xMin: " + bounds[0] + "\n"
 			+ "xMin: " + bounds[0] + "\n"
-			+ "yMax: " + bounds[2] + "\n"
+			+ "yMin: " + bounds[2] + "\n"
 			+ "yMax: " + bounds[3];
 	}
 
@@ -98,17 +98,27 @@ public class Hitbox {
 
 		/*
 		 * Compare each x and y bounds.
-		 * Collision occurs when comparisons are true.
+		 * Collision occurs when certain conditions are met.
 		 * compBounds[0] = this.xMin ≤ other.xMax;
+		 * 		   this.Left ≤ other.Right;
 		 * compBounds[1] = this.xMax ≤ other.xMin;
-		 * compBounds[2] = this.yMin ≤ other.yMax;
-		 * compBounds[3] = this.yMax ≥ other.yMin;
+		 * 		   this.Right ≤ other.Left;
+		 * compBounds[2] = this.yMin ≥ other.yMax;
+		 * 		   this.Top ≥ other.Bottom;
+		 * compBounds[3] = this.yMax ≤ other.yMin;
+		 * 		   this.Bottom ≤ other.Top;
+		 * compBounds[4] = this.xMin == other.xMin;
+		 * 		   this.Left == other.Left;
+		 * compBounds[5] = this.xMax == other.xMax;
+		 * 		   this.Left == other.Left;
 		 */
-		boolean[] compBounds = new boolean[4];
+		boolean[] compBounds = new boolean[6];
 		compBounds[0] = bounds[0] <= otherBounds[1];
 		compBounds[1] = bounds[1] <= otherBounds[0];
-		compBounds[2] = bounds[2] <= otherBounds[3];
-		compBounds[3] = bounds[3] >= otherBounds[2];
+		compBounds[2] = bounds[2] >= otherBounds[3];
+		compBounds[3] = bounds[3] <= otherBounds[2];
+		compBounds[4] = bounds[0] == otherBounds[0];
+		compBounds[5] = bounds[1] == otherBounds[1];
 	
 		/*
 		 * Collision Conditions:
@@ -117,44 +127,56 @@ public class Hitbox {
 		 * Let T be the top bound, B be the bottom bound,
 		 *    L be the left bound, and R be right bound of the hitbox.
 		 *
-		 * 1. Hitboxes passed each other.
+		 * 1. When hitboxes completely pass each other,
 		 *    If h1.L > h2.R & h1.R < h2.L,
 		 *    then no collision.
 		 *
 		 * 2. Before hitboxes completely pass each other,
 		 *    top or bottom bound of each hitboxes converge.
-		 *    If h1.L < h2.R & h1.R ≥ h2.L,
-		 *    and h1.B ≤ h2.T / h1.T ≥ h2.B,
+		 *    If h1.L ≤ h2.R & h1.R ≤ h2.L,
+		 *    and h1.T ≥ h2.B / h1.B ≤ h2.T
 		 *    then collision.
 		 *
 		 * 3. Before hitboxes completely pass each other,
 		 *    top or bottom bound of each hitboxes do not converge.
-		 *    If h1.L < h2.R & h1.R ≥ h2.L,
-		 *    and h1.B > h2.T / h1.T < h2.B,
+		 *    If h1.L ≤ h2.R & h1.R ≥ h2.L,
+		 *    and h1.T < h2.B / h1.B > h2.T,
 		 *    then no collision.
 		 *
 		 * 4. Before hitboxes pass each other vertically,
 		 *    top or bottom bound of each hitboxes converge.
-		 *    If h1.L ≥ h2.R & h1.R ≥ h2.L,
-		 *    and h1.B ≤ h2.T / h1.T ≥ h2.B,
+		 *    If h1.L ≤ h2.R & h1.R > h2.L,
+		 *    and h1.T ≥ h2.B / h1.B ≤ h2.T,
 		 *    then collision.
 		 *
 		 * 5. Before hitboxes pass each other vertically,
-		 *    top or bottom bound of each hitboxes converge.
-		 *    If h1.L ≥ h2.R & h1.R ≥ h2.L,
-		 *    and h1.B > h2.T / h1.T < h2.B,
+		 *    top or bottom bound of each hitboxes do not converge.
+		 *    If h1.L ≤ h2.R & h1.R > h2.L,
+		 *    and h1.T < h2.B / h1.B > h2.T,
 		 *    then no collision.
 		 *
-		 * 6. While hitboxes has not pass each other in any direction,
-		 *    but are in front of each other, then no collision.
-		 *    If h1.L < h2.R & h1.R < h2.L,
-		 *    and h1.B > h2.T / h1.T < h2.B,
+		 * 6. While hitboxes share the same vertical space,
+		 *    and have not completely passed each other,
+		 *    top or bottom bound of each hitboxes converge.
+		 *    If h1.L < h2.R & h1.R < h2.L
+		 *    and h1.L == h2.L & h1.R == h2.R,
+		 *    and h1.T ≥ h2.B / h1.B ≤ h2.T,
+		 *    then collision.
+		 *
+		 * 7. While hitboxes share the same vertical space,
+		 *    and have not completely passed each other,
+		 *    top or bottom bound of each hitboxes do not converge.
+		 *    If h1.L < h2.R & h1.R < h2.L
+		 *    and h1.L == h2.L & h1.R == h2.R,
+		 *    and h1.T < h2.B / h1.B > h2.T,
 		 *    then no collision.
+		 *
+		 * 8. Any other position can not have collisions.
 		 */
 		if (compBounds[0] == false && compBounds[1] == false) {
 			collided = false; // Condition 1	
 			other.setCollided(false);
-		} else if (compBounds[0] == false && compBounds[1] == true) {
+		} else if (compBounds[0] == true && compBounds[1] == true) {
 			if (compBounds[2] == true || compBounds[3] == true) {
 				collided = true; // Condition 2
 				other.setCollided(true);
@@ -162,7 +184,7 @@ public class Hitbox {
 				collided = false; // Condition 3
 				other.setCollided(false);
 			}
-		} else if (compBounds[0] == true && compBounds[1] == true) {
+		} else if (compBounds[0] == true && compBounds[1] == false) {
 			if (compBounds[2] == true || compBounds[3] == true) {
 				collided = true; // Condition 4
 				other.setCollided(true);
@@ -170,8 +192,16 @@ public class Hitbox {
 				collided = false; // Condition 5
 				other.setCollided(false);
 			}
+		} else if (compBounds[4] == true && compBounds[5] == true) {
+			if (compBounds[2] == true || compBounds[3] == true) {
+				collided = true; // Condition 6 
+				other.setCollided(true);
+			} else {
+				collided = false; // Condition 7
+				other.setCollided(false);
+			}
 		} else {
-			collided = false; // Condition 6
+			collided = false; // Condition 8
 			other.setCollided(false);
 		}
 		

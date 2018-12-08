@@ -39,9 +39,11 @@ public abstract class Aircraft implements Icon {
 	}
 
 	public void setLocation(int x, int y) {
+		//sop("\nBefore\n" + zone.printBounds());
 		this.x += x;
 		this.y += y;
 		this.zone.resetBounds();
+		//sop("\nAfter\n" + zone.printBounds());
 	}	
 
 	public int getX() {
@@ -81,4 +83,8 @@ public abstract class Aircraft implements Icon {
 	 * @return aircraft
 	 */
 	public abstract String toString();
+
+	public static void sop(Object o) {
+		System.out.println(o);
+	}
 }
