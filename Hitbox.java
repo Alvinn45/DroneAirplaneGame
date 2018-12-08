@@ -99,6 +99,10 @@ public class Hitbox {
 		/*
 		 * Compare each x and y bounds.
 		 * Collision occurs when certain conditions are met.
+		 * bounds[0] = xMin; // Left
+		 * bounds[1] = xMax; // Right
+		 * bounds[2] = yMin; // Top
+		 * bounds[3] = yMax; // Bottom
 		 * compBounds[0] = this.xMin ≤ other.xMax;
 		 * 		   this.Left ≤ other.Right;
 		 * compBounds[1] = this.xMax ≤ other.xMin;
@@ -111,7 +115,7 @@ public class Hitbox {
 		 * 		   this.Left == other.Left;
 		 * compBounds[5] = this.xMax == other.xMax;
 		 * 		   this.Left == other.Left;
-		 */
+		/*
 		boolean[] compBounds = new boolean[8];
 		compBounds[0] = bounds[0] <= otherBounds[1];
 		compBounds[1] = bounds[1] <= otherBounds[0];
@@ -121,6 +125,79 @@ public class Hitbox {
 		compBounds[5] = bounds[1] == otherBounds[1];
 		compBounds[6] = bounds[2] == otherBounds[2];
 		compBounds[7] = bounds[3] == otherBounds[3];
+		*/
+
+		boolean[] compBounds = new boolean[8];
+		compBounds[0] = bounds[0] >= otherBounds[0];
+		compBounds[1] = bounds[1] <= otherBounds[1];
+		compBounds[2] = bounds[2] <= otherBounds[2];
+		compBounds[3] = bounds[3] >= otherBounds[3];
+		compBounds[4] = bounds[0] <= otherBounds[0];
+		compBounds[5] = bounds[1] >= otherBounds[1];
+		compBounds[6] = bounds[2] >= otherBounds[2];
+		compBounds[7] = bounds[3] <= otherBounds[3];
+
+		if (compBounds[0] && compBounds[1]
+			&& compBounds[2] && compBounds[3]) {
+			collided = true;
+		} else if (compBounds[4] && compBounds[1]
+			&& compBounds[2] && compBounds[3]) {
+			collided = true;
+		} else if (compBounds[0] && compBounds[5]
+			&& compBounds[2] && compBounds[3]) {
+			collided = true;
+		} else if (compBounds[0] && compBounds[1]
+			&& compBounds[6] && compBounds[3]) {
+			collided = true;
+		} else if (compBounds[0] && compBounds[1]
+			&& compBounds[2] && compBounds[7]) {
+			collided = false;
+		}
+		
+		/*
+		sop("\nHas collided: " + collided
+			+ "\nh1.xMin <= h2.xMax: " + compBounds[0]
+			+ "\nh1.xMax <= h2.xMin: " + compBounds[1]
+			+ "\nh1.yMin <= h2.yMax: " + compBounds[2]
+			+ "\nh1.yMax >= h2.yMin: " + compBounds[3]);
+		*/
+
+		return collided;
+	}
+
+
+	public void oldCollided() {
+		/*
+		 * Compare each x and y bounds.
+		 * Collision occurs when certain conditions are met.
+		 * bounds[0] = xMin; // Left
+		 * bounds[1] = xMax; // Right
+		 * bounds[2] = yMin; // Top
+		 * bounds[3] = yMax; // Bottom
+		 * compBounds[0] = this.xMin ≤ other.xMax;
+		 * 		   this.Left ≤ other.Right;
+		 * compBounds[1] = this.xMax ≤ other.xMin;
+		 * 		   this.Right ≤ other.Left;
+		 * compBounds[2] = this.yMin ≥ other.yMax;
+		 * 		   this.Top ≥ other.Bottom;
+		 * compBounds[3] = this.yMax ≤ other.yMin;
+		 * 		   this.Bottom ≤ other.Top;
+		 * compBounds[4] = this.xMin == other.xMin;
+		 * 		   this.Left == other.Left;
+		 * compBounds[5] = this.xMax == other.xMax;
+		 * 		   this.Left == other.Left;
+		/*
+		boolean[] compBounds = new boolean[8];
+		compBounds[0] = bounds[0] <= otherBounds[1];
+		compBounds[1] = bounds[1] <= otherBounds[0];
+		compBounds[2] = bounds[2] >= otherBounds[3];
+		compBounds[3] = bounds[3] <= otherBounds[2];
+		compBounds[4] = bounds[0] == otherBounds[0];
+		compBounds[5] = bounds[1] == otherBounds[1];
+		compBounds[6] = bounds[2] == otherBounds[2];
+		compBounds[7] = bounds[3] == otherBounds[3];
+		*/
+
 	
 		/*
 		 * Collision Conditions:
@@ -175,6 +252,7 @@ public class Hitbox {
 		 *
 		 * 8. Any other position can not have collisions.
 		 */
+		/*
 		if (compBounds[0] == false && compBounds[1] == false) {
 			collided = false; // Condition 1	
 			other.setCollided(false);
@@ -209,14 +287,7 @@ public class Hitbox {
 			collided = false; // Condition 8
 			other.setCollided(false);
 		}
-		
-		sop("\nHas collided: " + collided
-			+ "\nh1.xMin <= h2.xMax: " + compBounds[0]
-			+ "\nh1.xMax <= h2.xMin: " + compBounds[1]
-			+ "\nh1.yMin <= h2.yMax: " + compBounds[2]
-			+ "\nh1.yMax >= h2.yMin: " + compBounds[3]);
-
-		return collided;
+		*/
 	}
 
 	public static void sop(Object o) {
