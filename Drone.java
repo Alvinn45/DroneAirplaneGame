@@ -1,14 +1,13 @@
-/**
+ /**
  * Flying Drone.
  * @author Alvin Nguyen
+ * @author Spencer Enriquez
  */
-import java.awt.*;
-import java.io.*;
-import java.util.*;
-import javax.swing.*;
- 
+import java.awt.event.KeyEvent;
+
 public class Drone extends Aircraft {
 	
+	// Initial number of lives depends on game's parameters.
 	private int lives;
 
 	public Drone(int x, int y, String imgFile) {
@@ -45,32 +44,45 @@ public class Drone extends Aircraft {
 	public void subtractLife() {
 		lives--;
 	}
+
+	public String toString() {
+		return "Drone at:\n" + this.getHitbox().printBounds();
+	}
 	
-		public void keyPressed(KeyEvent e){
+	/**
+	 * Drone moves in direction of pressed input command:
+	 * UP, DOWN, LEFT, RIGHT.
+	 * @param input pressed
+	 */
+	public void keyPressed(KeyEvent e){
 		int key = e.getKeyCode();
 		
 		if(key == KeyEvent.VK_UP){
-			setLocation(0,getY() + 5);
+			setLocation(0, 40);
 		}else if(key == KeyEvent.VK_DOWN){
-			setLocation(0,getY()-5);
+			setLocation(0, -40);
 		}else if(key == KeyEvent.VK_RIGHT){
-			setLocation(getX() +5,0);
+			setLocation(40, 0);
 		}else if(key == KeyEvent.VK_LEFT){
-			setLocation(getX()-5,0);
+			setLocation(-40, 0);
 		}
 	}
 	
+	/**
+	 * Drone does not move after key press is released.
+	 * @param input released
+	 */
 	public void keyReleased(KeyEvent e){
 		int key = e.getKeyCode();
 		
 		if(key == KeyEvent.VK_UP){
-			setLocation(0,0);
+			setLocation(0, 0);
 		}else if(key == KeyEvent.VK_DOWN){
-			setLocation(0,0);
+			setLocation(0, 0);
 		}else if(key == KeyEvent.VK_RIGHT){
-			setLocation(0,0);
+			setLocation(0, 0);
 		}else if(key == KeyEvent.VK_LEFT){
-			setLocation(0,0);
+			setLocation(0, 0);
 		}
 	}
 }
