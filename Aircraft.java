@@ -1,4 +1,5 @@
 /**
+ /**
  * Aircraft created by flying object.
  * @author Alvin Nguyen
  * @author Spencer Enriquez
@@ -27,8 +28,8 @@ public abstract class Aircraft implements Icon {
 			img = ImageIO.read(new File(imgFile));
 			w = img.getWidth();
 			h = img.getHeight();
+			zone = new Hitbox(this);
 			angle = (w == h) ? 90 : 0;
-			zone = new Hitbox(this);			
 		} catch (IOException io) {
 			System.out.println(io);
 		}
@@ -39,9 +40,11 @@ public abstract class Aircraft implements Icon {
 	}
 
 	public void setLocation(int x, int y) {
+		//sop("\nBefore\n" + zone.printBounds());
 		this.x += x;
 		this.y += y;
-		zone.resetBounds();
+		this.zone.resetBounds();
+		//sop("\nAfter\n" + zone.printBounds());
 	}	
 
 	public int getX() {
@@ -50,7 +53,7 @@ public abstract class Aircraft implements Icon {
 
 	public void setX(int x) {
 		this.x = x;
-		zone.resetBounds();
+		this.zone.resetBounds();
 	}
 
 	public int getY() {
@@ -59,7 +62,7 @@ public abstract class Aircraft implements Icon {
 
 	public void setY(int y) {
 		this.y = y;
-		zone.resetBounds();
+		this.zone.resetBounds();
 	}
 
 	public int getIconWidth() {  
@@ -76,4 +79,13 @@ public abstract class Aircraft implements Icon {
 		g2.drawImage(img, x, y, null);
 	}
 
+	/**
+	 * Return aircraft type.
+	 * @return aircraft
+	 */
+	public abstract String toString();
+
+	public static void sop(Object o) {
+		System.out.println(o);
+	}
 }
