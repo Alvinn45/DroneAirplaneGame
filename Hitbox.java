@@ -112,13 +112,15 @@ public class Hitbox {
 		 * compBounds[5] = this.xMax == other.xMax;
 		 * 		   this.Left == other.Left;
 		 */
-		boolean[] compBounds = new boolean[6];
+		boolean[] compBounds = new boolean[8];
 		compBounds[0] = bounds[0] <= otherBounds[1];
 		compBounds[1] = bounds[1] <= otherBounds[0];
 		compBounds[2] = bounds[2] >= otherBounds[3];
 		compBounds[3] = bounds[3] <= otherBounds[2];
 		compBounds[4] = bounds[0] == otherBounds[0];
 		compBounds[5] = bounds[1] == otherBounds[1];
+		compBounds[6] = bounds[2] == otherBounds[2];
+		compBounds[7] = bounds[3] == otherBounds[3];
 	
 		/*
 		 * Collision Conditions:
@@ -177,7 +179,8 @@ public class Hitbox {
 			collided = false; // Condition 1	
 			other.setCollided(false);
 		} else if (compBounds[0] == true && compBounds[1] == true) {
-			if (compBounds[2] == true || compBounds[3] == true) {
+			if ((compBounds[2] == true || compBounds[3] == true)
+			&& (compBounds[6] == true || compBounds[7] == true)) {
 				collided = true; // Condition 2
 				other.setCollided(true);
 			} else {
@@ -185,7 +188,8 @@ public class Hitbox {
 				other.setCollided(false);
 			}
 		} else if (compBounds[0] == true && compBounds[1] == false) {
-			if (compBounds[2] == true || compBounds[3] == true) {
+			if ((compBounds[2] == true || compBounds[3] == true)
+			&& (compBounds[6] == true || compBounds[7] == true)) {
 				collided = true; // Condition 4
 				other.setCollided(true);
 			} else {
@@ -193,7 +197,8 @@ public class Hitbox {
 				other.setCollided(false);
 			}
 		} else if (compBounds[4] == true && compBounds[5] == true) {
-			if (compBounds[2] == true || compBounds[3] == true) {
+			if ((compBounds[2] == true || compBounds[3] == true)
+			&& (compBounds[6] == true || compBounds[7] == true)) {
 				collided = true; // Condition 6 
 				other.setCollided(true);
 			} else {
@@ -209,7 +214,7 @@ public class Hitbox {
 			+ "\nh1.xMin <= h2.xMax: " + compBounds[0]
 			+ "\nh1.xMax <= h2.xMin: " + compBounds[1]
 			+ "\nh1.yMin <= h2.yMax: " + compBounds[2]
-			+ "\nh1.yMax >= h2.yMax: " + compBounds[3]);
+			+ "\nh1.yMax >= h2.yMin: " + compBounds[3]);
 
 		return collided;
 	}
