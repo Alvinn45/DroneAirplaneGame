@@ -69,7 +69,7 @@ public class Frame extends JFrame {
 				}
 				drn.setX(dLabel.getX());
 				drn.setY(dLabel.getY());
-				drn.getHitbox().resetBounds();
+				//drn.getHitbox().resetBounds();
 				//sop(dHitbox.printBounds());
 			}
 			
@@ -110,10 +110,10 @@ public class Frame extends JFrame {
 					planeLabels.get(i).setLocation(
 						planes.get(i).getX(),
 						planes.get(i).getY());
-					planes.get(i).getHitbox().resetBounds();
+					//planes.get(i).getHitbox().resetBounds();
 					//sop(planeHitboxes.get(i).printBounds());
+					planeLabels.get(i).repaint();
 				}
-				for (JLabel pl : planeLabels) pl.repaint();
 			}
 		});
 		updateMovement.start();
@@ -128,10 +128,10 @@ public class Frame extends JFrame {
 						(int)(Math.random() * FRAME_HEIGHT));
 				}
 				planes.get(i).setLocation(-5, 0);
-				planes.get(i).getHitbox().resetBounds();
+				//planes.get(i).getHitbox().resetBounds();
 				//sop(planeHitboxes.get(i).printBounds());
+				planeLabels.get(i).repaint();
 			}
-			for (JLabel pl : planeLabels) pl.repaint();
 		});
 		respawnPlanes.start();
 	
@@ -149,18 +149,20 @@ public class Frame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				int winTime = scores.getWinTime();
 				boolean gameFinished = time.getSeconds() <= winTime;
-				boolean collided = drn.getHitbox().getCollided();
+				//boolean collided = drn.getHitbox().getCollided();
+				boolean collided = false;
+				RectangleHitbox drnHitbox = drn.getHitArea();
 				boolean dead = drn.isDead();
 				if (gameFinished && !dead) {
 					time.addSecond();
 					for (Aircraft pn : planes) {
-					collided = drn.getHitbox().hasCollided(
-							pn.getHitbox());
+					collided = drnHitbox.intersects(pn.getHitArea());
+					//collided = drn.getHitbox().hasCollided(pn.getHitbox());
 					//sop("Collided: " + collided);
 					if (collided == true) {
 						drn.subtractLife();
-						drn.getHitbox().setCollided(false);
-						pn.getHitbox().setCollided(false);
+						//drn.getHitbox().setCollided(false);
+						//pn.getHitbox().setCollided(false);
 						//sop("Collision of " + drn.toString());
 						//sop("with\nCollision of " + pn.toString());
 					}
@@ -169,7 +171,8 @@ public class Frame extends JFrame {
 					}
 				} else {
 					drn.setLives(scores.getAvailLives());
-					drn.getHitbox().setCollided(false);
+					//drn.getHitbox().setCollided(false);
+					collided = false;
 					time.reset();
 				}
 				scores.checkScore(time, drn);

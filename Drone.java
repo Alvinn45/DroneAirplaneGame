@@ -45,7 +45,8 @@ public class Drone extends Aircraft {
 	}
 
 	public String toString() {
-		return "Drone at:\n" + this.getHitbox().printBounds();
+		//return "Drone at:\n" + this.getHitbox().printBounds();
+		return "Drone";
 	}
 
 	/**
