@@ -10,7 +10,7 @@ public class Scoreboard2 {
 	private int wonGames;
 	private int totalGames;
 	private String scoreFormat;
-	public final int AVAIL_LIVES = 3;
+	public final int AVAIL_LIVES = 2;
 	public final int WIN_TIME = 90;
 	public final int WIN_LIVES_LEFT = 0;
 
