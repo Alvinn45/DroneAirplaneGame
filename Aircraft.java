@@ -1,4 +1,3 @@
-/**
  /**
  * Aircraft created by flying object.
  * @author Alvin Nguyen
