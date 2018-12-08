@@ -109,7 +109,7 @@ public class Hitbox {
 		compBounds[1] = bounds[1] <= otherBounds[0];
 		compBounds[2] = bounds[2] <= otherBounds[3];
 		compBounds[3] = bounds[3] >= otherBounds[2];
-		
+	
 		/*
 		 * Collision Conditions:
 		 * Let the h1 be the current hitbox, and h2 be the other hitbox.
@@ -174,6 +174,17 @@ public class Hitbox {
 			collided = false; // Condition 6
 			other.setCollided(false);
 		}
+		
+		sop("\nHas collided: " + collided
+			+ "\nh1.xMin <= h2.xMax: " + compBounds[0]
+			+ "\nh1.xMax <= h2.xMin: " + compBounds[1]
+			+ "\nh1.yMin <= h2.yMax: " + compBounds[2]
+			+ "\nh1.yMax <= h2.yMax: " + compBounds[3]);
+
 		return collided;
+	}
+
+	public static void sop(Object o) {
+		System.out.println(o);
 	}
 }

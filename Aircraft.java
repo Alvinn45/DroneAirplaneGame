@@ -67,4 +67,10 @@ public abstract class Aircraft implements Icon {
 		g2.drawImage(img, x, y, null);
 	}
 
+	/**
+	 * Return aircraft type.
+	 * @return aircraft
+	 */
+	public abstract String toString();
+
 }

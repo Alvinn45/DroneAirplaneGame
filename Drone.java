@@ -44,6 +44,10 @@ public class Drone extends Aircraft {
 		lives--;
 	}
 
+	public String toString() {
+		return "Drone at: " + this.getX() + ", " + this.getY();
+	}
+
 	/**
 	 * Test if lives of drone does not decrease beyond life limit.
 	 * @param Drone

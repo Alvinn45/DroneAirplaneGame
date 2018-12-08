@@ -146,9 +146,10 @@ public class Frame extends JFrame {
 		Timer updateConditions = new Timer(1000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				int winTime = scores.getWinTime();
 				boolean collided = dHitbox.getCollided();
 				boolean dead = drn.isDead();
-				if (time.getSeconds() <= scores.getWinTime()
+				if (time.getSeconds() <= winTime
 						&& dead == false) {
 					time.addSecond();
 					for (Hitbox ph : planeHitboxes) {
@@ -158,12 +159,14 @@ public class Frame extends JFrame {
 						drn.subtractLife();
 						dHitbox.setCollided(false);
 						ph.setCollided(false);
+						sop("Collision of " + drn.toString());
 					}
 					//sop("Drone Lives: " + drn.getLives());
 					//sop("Drone died: " + drn.isDead());
 					}
 				} else {
 					drn.setLives(scores.getAvailLives());
+					dHitbox.setCollided(false);
 					time.reset();
 				}
 				scores.checkScore(time, drn);
