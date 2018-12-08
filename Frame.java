@@ -98,7 +98,35 @@ public class Frame extends JFrame {
 
 		// Planes(2): Add enemy planes to JFrame.
 		for (JLabel pl : planeLabels) skyField.add(pl);
- 
+
+		// Planes(3): Move enemy Planes.
+		final int DELAY = 30;
+		Timer planeMovement = new Timer(DELAY, new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			dLabel.setLocation(drn.getX() + 1, drn.getY());
+			drn.setX(dLabel.getX());
+			drn.setY(dLabel.getY());
+			for (int i = 0; i < planes.size(); i++) {
+				int plWidth = planes.get(i).getIconWidth();
+				int plX = planes.get(i).getX();
+				int plY = planes.get(i).getY();
+				if (plX < -plWidth) {
+					planes.get(i).setX(
+						FRAME_WIDTH + plWidth);	
+					planes.get(i).setY((int)
+						(Math.random() * FRAME_HEIGHT));
+				}
+				planeLabels.get(i).setLocation(
+						plX - DELAY, plY - DELAY);
+				planeHitboxes.get(i).resetBounds();
+				//sop(planeHitboxes.get(i).printBounds());
+				planeLabels.get(i).repaint();
+			}
+		}
+		});
+		planeMovement.start();
+
+		/*
 		// Planes(3): Move enemy Planes.
 		final int DELAY = 30;
 		Timer updateMovement = new Timer(DELAY, new ActionListener() {
@@ -134,6 +162,7 @@ public class Frame extends JFrame {
 			for (JLabel pl : planeLabels) pl.repaint();
 		});
 		respawnPlanes.start();
+		*/
 		
 		// Game(1): Add Scoreboard and TimeClock
 		TimeClock time = new TimeClock();	      

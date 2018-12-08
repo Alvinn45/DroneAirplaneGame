@@ -78,7 +78,7 @@ public class Scoreboard2 {
 	 * @param drone
 	 */
 	public void checkScore(TimeClock time, Drone drone) {
-		if (time.getSeconds() == WIN_TIME && drone.isDead()) {
+		if (time.getSeconds() == WIN_TIME && !drone.isDead()) {
 			totalGames++;
 			wonGames++;
 		} else if (time.getSeconds() < WIN_TIME && drone.isDead()) {
