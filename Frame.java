@@ -39,7 +39,7 @@ public class Frame extends JFrame {
 		skyField.add(dLabel);
 		dLabel.setBounds(drn.getX(), drn.getY(),
 				drn.getIconWidth(), drn.getIconHeight());
-		Hitbox dHitbox = new Hitbox(drn);
+		// Hitbox dHitbox = new Hitbox(drn);
 		//sop(dHitbox.printBounds());
 
 		// Drone(2): Arrow Key Movement Implementation.
@@ -69,7 +69,7 @@ public class Frame extends JFrame {
 				}
 				drn.setX(dLabel.getX());
 				drn.setY(dLabel.getY());
-				dHitbox.resetBounds();
+				drn.getHitbox().resetBounds();
 				//sop(dHitbox.printBounds());
 			}
 			
@@ -81,7 +81,7 @@ public class Frame extends JFrame {
 		// Plane(1): Add enemy planes.
 		ArrayList<Aircraft> planes = new ArrayList<>();
 		ArrayList<JLabel>  planeLabels = new ArrayList<>();
-		ArrayList<Hitbox>  planeHitboxes = new ArrayList<>();
+		// ArrayList<Hitbox>  planeHitboxes = new ArrayList<>();
 		for (int i = 0; i < 2; i++) {
 			int adjust = (int)(Math.random() * FRAME_WIDTH / 2);
 			planes.add(new Plane(FRAME_WIDTH + adjust,
@@ -92,13 +92,50 @@ public class Frame extends JFrame {
 						planes.get(i).getY(),
 						planes.get(i).getIconWidth(),
 						planes.get(i).getIconHeight());
-			planeHitboxes.add(new Hitbox(planes.get(i)));
-			//for (Hitbox ph : planeHitboxes) sop(ph.printBounds());
+			// planeHitboxes.add(new Hitbox(planes.get(i)));
+			//for (Hitbox pl : planeHitboxes) sop(pl.printBounds());
 		}
 
 		// Planes(2): Add enemy planes to JFrame.
 		for (JLabel pl : planeLabels) skyField.add(pl);
 
+		// Planes(3): Move enemy Planes.
+		final int DELAY = 30;
+		Timer updateMovement = new Timer(DELAY, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dLabel.setLocation(drn.getX() + 1, drn.getY());
+				drn.setX(dLabel.getX());
+				drn.setY(dLabel.getY());
+				for (int i = 0; i < planeLabels.size(); i++) {
+					planeLabels.get(i).setLocation(
+						planes.get(i).getX(),
+						planes.get(i).getY());
+					planes.get(i).getHitbox().resetBounds();
+					//sop(planeHitboxes.get(i).printBounds());
+				}
+				for (JLabel pl : planeLabels) pl.repaint();
+			}
+		});
+		updateMovement.start();
+
+		// Planes(4): Respawn Airplanes to the opposite side.
+		Timer respawnPlanes = new Timer(DELAY, event -> {
+			for (int i = 0; i < planes.size(); i++) {
+				int plWidth = planes.get(i).getIconWidth();
+				if (planes.get(i).getX() < -plWidth) {
+					planes.get(i).setX(FRAME_WIDTH + plWidth);	
+					planes.get(i).setY(
+						(int)(Math.random() * FRAME_HEIGHT));
+				}
+				planes.get(i).setLocation(-5, 0);
+				planes.get(i).getHitbox().resetBounds();
+				//sop(planeHitboxes.get(i).printBounds());
+			}
+			for (JLabel pl : planeLabels) pl.repaint();
+		});
+		respawnPlanes.start();
+	
+		/*
 		// Planes(3): Move enemy Planes.
 		final int DELAY = 30;
 		Timer planeMovement = new Timer(DELAY, new ActionListener() {
@@ -118,52 +155,15 @@ public class Frame extends JFrame {
 				}
 				planeLabels.get(i).setLocation(
 						plX - DELAY, plY - DELAY);
-				planeHitboxes.get(i).resetBounds();
+				planes.get(i).resetBounds();
 				//sop(planeHitboxes.get(i).printBounds());
 				planeLabels.get(i).repaint();
 			}
 		}
 		});
 		planeMovement.start();
+		*/	
 
-		/*
-		// Planes(3): Move enemy Planes.
-		final int DELAY = 30;
-		Timer updateMovement = new Timer(DELAY, new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dLabel.setLocation(drn.getX() + 1, drn.getY());
-				drn.setX(dLabel.getX());
-				drn.setY(dLabel.getY());
-				for (int i = 0; i < planeLabels.size(); i++) {
-					planeLabels.get(i).setLocation(
-						planes.get(i).getX(),
-						planes.get(i).getY());
-					planeHitboxes.get(i).resetBounds();
-					//sop(planeHitboxes.get(i).printBounds());
-				}
-				for (JLabel pl : planeLabels) pl.repaint();
-			}
-		});
-		updateMovement.start();
-
-		// Planes(4): Respawn Airplanes to the opposite side.
-		Timer respawnPlanes = new Timer(DELAY, event -> {
-			for (int i = 0; i < planes.size(); i++) {
-				int plWidth = planes.get(i).getIconWidth();
-				if (planes.get(i).getX() < -plWidth) {
-					planes.get(i).setX(FRAME_WIDTH + plWidth);	
-					planes.get(i).setY(
-						(int)(Math.random() * FRAME_HEIGHT));
-				}
-				planes.get(i).setLocation(-5, 0);
-				planeHitboxes.get(i).resetBounds();
-				//sop(planeHitboxes.get(i).printBounds());
-			}
-			for (JLabel pl : planeLabels) pl.repaint();
-		});
-		respawnPlanes.start();
-		*/
-		
 		// Game(1): Add Scoreboard and TimeClock
 		TimeClock time = new TimeClock();	      
 		Scoreboard2 scores = new Scoreboard2();
@@ -177,18 +177,19 @@ public class Frame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int winTime = scores.getWinTime();
-				boolean collided = dHitbox.getCollided();
+				boolean gameFinished = time.getSeconds() <= winTime;
+				boolean collided = drn.getHitbox().getCollided();
 				boolean dead = drn.isDead();
-				if (time.getSeconds() <= winTime
-						&& dead == false) {
+				if (gameFinished && !dead) {
 					time.addSecond();
-					for (Hitbox ph : planeHitboxes) {
-					collided = dHitbox.hasCollided(ph);
+					for (Aircraft pn : planes) {
+					collided = drn.getHitbox().hasCollided(
+							pn.getHitbox());
 					//sop("Collided: " + collided);
 					if (collided == true) {
 						drn.subtractLife();
-						dHitbox.setCollided(false);
-						ph.setCollided(false);
+						drn.getHitbox().setCollided(false);
+						pn.getHitbox().setCollided(false);
 						sop("Collision of " + drn.toString());
 					}
 					//sop("Drone Lives: " + drn.getLives());
@@ -196,7 +197,7 @@ public class Frame extends JFrame {
 					}
 				} else {
 					drn.setLives(scores.getAvailLives());
-					dHitbox.setCollided(false);
+					drn.getHitbox().setCollided(false);
 					time.reset();
 				}
 				scores.checkScore(time, drn);

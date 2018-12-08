@@ -41,7 +41,7 @@ public abstract class Aircraft implements Icon {
 	public void setLocation(int x, int y) {
 		this.x += x;
 		this.y += y;
-		this.getHitbox().resetBounds();
+		this.zone.resetBounds();
 	}	
 
 	public int getX() {
@@ -50,7 +50,7 @@ public abstract class Aircraft implements Icon {
 
 	public void setX(int x) {
 		this.x = x;
-		this.getHitbox().resetBounds();
+		this.zone.resetBounds();
 	}
 
 	public int getY() {
@@ -59,7 +59,7 @@ public abstract class Aircraft implements Icon {
 
 	public void setY(int y) {
 		this.y = y;
-		this.getHitbox().resetBounds();
+		this.zone.resetBounds();
 	}
 
 	public int getIconWidth() {  
@@ -76,4 +76,9 @@ public abstract class Aircraft implements Icon {
 		g2.drawImage(img, x, y, null);
 	}
 
+	/**
+	 * Return aircraft type.
+	 * @return aircraft
+	 */
+	public abstract String toString();
 }

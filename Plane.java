@@ -9,6 +9,6 @@ public class Plane extends Aircraft {
 	}
 
 	public String toString() {
-		return "Airplane at: " + this.getX() + ", " + this.getY();
+		return "Plane at: " + this.getX() + ", " + this.getY();
 	}
 }	
