@@ -100,7 +100,7 @@ public class Frame extends JFrame {
 		for (JLabel pl : planeLabels) skyField.add(pl);
 
 		// Planes(3): Move enemy Planes.
-		final int DELAY = 30;
+		final int DELAY = 100;
 		Timer updateMovement = new Timer(DELAY, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dLabel.setLocation(drn.getX() + 1, drn.getY());
