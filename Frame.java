@@ -73,25 +73,25 @@ public class Frame extends JFrame {
  
 		Timer updateMovement = new Timer(50, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*
+				//Collision Detection: Implemented by Alvin and does not work.
+				boolean collided;
 				for (int i = 0; i < planeLabels.size(); i++) {
-					if (drn.getHitbox().hasCollided(planes.get(i).getHitbox())) {
+					/*
+					collided = drn.getHitbox().hasCollided(planes.get(i).getHitbox());
+					//sop("Collided: " + collided);
+					if (collided == true) {
 						drn.subtractLife();
-						dLabel.setLocation(FRAME_WIDTH / 4, FRAME_HEIGHT / 4);
-						drn.setX(dLabel.getX());
-						drn.setY(dLabel.getY());
-						planes.get(i).setLocation(FRAME_WIDTH, (int)(Math.random() * FRAME_HEIGHT));
-						planes.get(i).setX(planeLabels.get(i).getX());
-						planes.get(i).setY(planeLabels.get(i).getY());
+						drn.getHitbox().setCollided(false);
+						planes.get(i).getHitbox().setCollided(false);
+						//sop("Collision of " + drn.toString());
+						//sop("with\nCollision of " + pn.toString());
 					}
+					 */
+					planeLabels.get(i).setLocation(planes.get(i).getX() - (int)Math.pow(2, scores.getWins()), planes.get(i).getY());
 				}
-				*/
 				dLabel.setLocation(drn.getX() + 1, drn.getY());
 				drn.setX(dLabel.getX());
 				drn.setY(dLabel.getY());
-				for (int i = 0; i < planeLabels.size(); i++) {
-					planeLabels.get(i).setLocation(planes.get(i).getX() - (int)Math.pow(2, scores.getWins()), planes.get(i).getY());
-				}
 			}
 		});
 		updateMovement.start();
